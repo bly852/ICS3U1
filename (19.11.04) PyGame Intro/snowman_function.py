@@ -1,9 +1,18 @@
-import pygame, sys, time
+import pygame, sys, time, random
 from pygame.locals import *
 
 #Window Dimensions
 w = 640
 h = 480
+x = w//2
+y = 150
+r = 50
+x_dir = 0
+y_dir = 0
+
+flakes = []
+for i in range (100):
+    flakes.append([random.randint(1,w), random.randint(1,h), random.randint(1,5)])
 
 pygame.init()
 fpsClock = pygame.time.Clock()
@@ -22,9 +31,6 @@ def drawSm(x,y,r):
      
     r2 = int(r*1.25)
     r3 = int(r2*1.25)
-
-    x += x_dir
-    y += y_dir
     
     #Top Circle
     pygame.draw.circle(screen, white, (x,y), r)
@@ -33,13 +39,19 @@ def drawSm(x,y,r):
     #Bottom Circle
     pygame.draw.circle(screen, white, (x,y+r*4), r3)
     
-    
-x_dir = 0
-y_dir = 0
 
 while True:
     screen.fill (pygame.Color (52, 235, 216))
-
+    
+    #Snowflakes
+    for i in range (len(flakes)):
+        pygame.draw.circle (screen, white, (flakes[i][0], flakes[i][1]), 6)
+        flakes[i][1] = flakes[i][1] + flakes[i][2]
+        if (flakes[i][1] > h ):
+            flakes[i][1] = 0
+            flakes[i][0] = random.randint(1,w)
+        
+    #Exiting Window
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
@@ -48,13 +60,29 @@ while True:
             if event.key == K_ESCAPE:
                 pygame.quit()
                 sys.exit()
+            
+            #Movement
             if event.key == K_LEFT:
                 x_dir = -5
             if event.key == K_RIGHT:
                 x_dir = 5
-
+        if event.type == KEYUP:
+            if event.key == K_LEFT:
+                x_dir = 0
+            if event.key == K_RIGHT:
+                x_dir = 0
     
-    drawSm(240,150,50)
+    #Edge Detection
+    if x < w-w: 
+        x_dir = 0
+        x += 1
+    if x > w: 
+        x_dir = 0
+        x -= 1
+        
+    drawSm(x,y,r)
+    
+    x += x_dir
     
     pygame.display.update()
-    fpsClock.tick(30)
+    fpsClock.tick(60)
