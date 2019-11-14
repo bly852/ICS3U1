@@ -4,9 +4,11 @@ from pygame.locals import *
 #Window Dimensions
 w = 640
 h = 480
+
 x = w//2
 y = 150
 r = 50
+
 x_dir = 0
 y_dir = 0
 
@@ -32,13 +34,22 @@ def drawSm(x,y,r):
     r2 = int(r*1.25)
     r3 = int(r2*1.25)
     
-    #Top Circle
+    #Body (Top to Bottom)
     pygame.draw.circle(screen, white, (x,y), r)
-    #Middle Circle
     pygame.draw.circle(screen, white, (x,y+r*2), r2)
-    #Bottom Circle
     pygame.draw.circle(screen, white, (x,y+r*4), r3)
     
+    #Buttons (Top to Bottom)
+    pygame.draw.circle(screen, black, (x,(y+r*2)-30), r//10)
+    pygame.draw.circle(screen, black, (x,y+r*2), r//10)
+    pygame.draw.circle(screen, black, (x,(y+r*2+30)), r//10)
+    
+    #Eyes
+    pygame.draw.circle(screen, black, (x-15,y-20), r//10)
+    pygame.draw.circle(screen, black, (x+15,y-20), r//10)
+    
+    #Mouth (Left to Right)
+    pygame.draw.circle(screen, black,)
 
 while True:
     screen.fill (pygame.Color (52, 235, 216))
@@ -76,7 +87,7 @@ while True:
     if x < w-w: 
         x_dir = 0
         x += 1
-    if x > w: 
+    elif x > w: 
         x_dir = 0
         x -= 1
         
