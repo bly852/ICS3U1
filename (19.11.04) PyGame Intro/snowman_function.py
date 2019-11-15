@@ -5,12 +5,14 @@ from pygame.locals import *
 w = 640
 h = 480
 
-x = w//2
+x = 240
 y = 150
 r = 50
 
 x_dir = 0
 y_dir = 0
+
+rPlus = 0
 
 flakes = []
 for i in range (100):
@@ -28,28 +30,27 @@ pygame.display.set_icon(icon)
 white = pygame.Color(255,255,255)
 black = pygame.Color(0,0,0)
 
+
+
 def drawSm(x,y,r):
 #Draws a snowman at a given location(x,y) with a given radius(r)
-     
-    r2 = int(r*1.25)
-    r3 = int(r2*1.25)
     
     #Body (Top to Bottom)
     pygame.draw.circle(screen, white, (x,y), r)
     pygame.draw.circle(screen, white, (x,y+r*2), r2)
     pygame.draw.circle(screen, white, (x,y+r*4), r3)
-    
+     
     #Buttons (Top to Bottom)
-    pygame.draw.circle(screen, black, (x,(y+r*2)-30), r//10)
+    pygame.draw.circle(screen, black, (x,(y+r*2)-(r//2)), r//10)
     pygame.draw.circle(screen, black, (x,y+r*2), r//10)
-    pygame.draw.circle(screen, black, (x,(y+r*2+30)), r//10)
+    pygame.draw.circle(screen, black, (x,(y+r*2+(r//2))), r//10)
     
     #Eyes
-    pygame.draw.circle(screen, black, (x-15,y-20), r//10)
-    pygame.draw.circle(screen, black, (x+15,y-20), r//10)
+    pygame.draw.circle(screen, black, (x-(r//3),y-(r//3)), r//10)
+    pygame.draw.circle(screen, black, (x+(r//3),y-(r//3)), r//10)
     
     #Mouth (Left to Right)
-    pygame.draw.circle(screen, black,)
+    #pygame.draw.circle(screen, black,)
 
 while True:
     screen.fill (pygame.Color (52, 235, 216))
@@ -72,27 +73,38 @@ while True:
                 pygame.quit()
                 sys.exit()
             
+            if event.key == K_EQUALS:
+                rPlus = 1
+            if event.key == K_MINUS:
+                rPlus = -1
             #Movement
-            if event.key == K_LEFT:
+            if event.key == K_LEFT or event.key == K_a:
                 x_dir = -5
-            if event.key == K_RIGHT:
+            if event.key == K_RIGHT or event.key == K_d:
                 x_dir = 5
         if event.type == KEYUP:
-            if event.key == K_LEFT:
+            if event.key == K_LEFT or event.key == K_RIGHT or event.key == K_a or event.key == K_d:
                 x_dir = 0
-            if event.key == K_RIGHT:
-                x_dir = 0
+            
+            if event.key == K_EQUALS or event.key == K_MINUS:
+                rPlus = 0
+    
+    r2 = int(r*1.25)
+    r3 = int(r2*1.25)
     
     #Edge Detection
-    if x < w-w: 
+    if x < 0 + r3: 
         x_dir = 0
         x += 1
-    elif x > w: 
+    elif x > w-r3: 
         x_dir = 0
         x -= 1
+    if r == 0:
+        r += 1
         
     drawSm(x,y,r)
     
+    r += rPlus
     x += x_dir
     
     pygame.display.update()
