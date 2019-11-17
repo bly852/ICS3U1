@@ -69,6 +69,7 @@ while True:
         
     #Key Detection
     for event in pygame.event.get():
+        #Game Exit
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
@@ -76,25 +77,29 @@ while True:
             if event.key == K_ESCAPE:
                 pygame.quit()
                 sys.exit()
-            
+        
+        #Radius Change
+        if event.type == KEYDOWN:
             if event.key == K_EQUALS:
                 rPlus = 1
             if event.key == K_MINUS:
                 rPlus = -1
-            #Movement
+        if event.type == KEYUP:
+            if event.key == K_EQUALS or event.key == K_MINUS:
+                rPlus = 0
+        
+        #Movement
+        if event.type == KEYDOWN:
             if event.key == K_LEFT or event.key == K_a:
                 x_dir = -7
             if event.key == K_RIGHT or event.key == K_d:
                 x_dir = 7
-            if event.key == K_UP or event.key == K_w:
+            if event.key == K_UP or event.key == K_w or event.key == K_SPACE:
                 if SmFoot >= h-floorY:
                     y -= 50
         if event.type == KEYUP:
             if event.key == K_LEFT or event.key == K_RIGHT or event.key == K_a or event.key == K_d:
                 x_dir = 0
-            
-            if event.key == K_EQUALS or event.key == K_MINUS:
-                rPlus = 0
     
     #Snowman Radiuses
     r2 = int(r*1.25)
@@ -116,7 +121,7 @@ while True:
     if SmHeight >= h-floorY:
         r -= 1
     
-    
+    #Gravity
     if SmFoot <= h-floorY:
         gravity = 8
     elif SmFoot >= h-floorY:
