@@ -13,7 +13,7 @@ x_dir = 0
 y_dir = 0
 rPlus = 0
 
-floorY = h//10
+floorY = h-(h//10)
 
 flakes = []
 for i in range ((w*h)//2500):
@@ -65,7 +65,7 @@ while True:
             flakes[i][0] = random.randint(1,w)
     
     #Floor
-    pygame.draw.rect(screen, white, ((0, h-floorY), (w, h)), 0)
+    pygame.draw.rect(screen, white, ((0, floorY), (w, h)), 0)
         
     #Key Detection
     for event in pygame.event.get():
@@ -118,15 +118,15 @@ while True:
     #Snowman Radius Error Prevention
     if r == 10:
         r += 1
-    if SmHeight >= h-floorY:
+    if SmHeight >= floorY:
         r -= 1
     
     #Gravity
-    if SmFoot <= h-floorY:
+    if SmFoot <= floorY:
         gravity = 8
-    elif SmFoot >= h-floorY:
+    elif SmFoot >= floorY:
         gravity = 0
-    if SmFoot > h-floorY+10:
+    if SmFoot > floorY+10:
         gravity = -16
         
     drawSm(x,y,r)
