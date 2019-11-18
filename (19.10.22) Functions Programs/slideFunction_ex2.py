@@ -11,3 +11,5 @@ def occ(s1,s2):
             count +=1
             start = search+1
     return count
+
+print(occ('hellohellohellohello', 'ohe'))
