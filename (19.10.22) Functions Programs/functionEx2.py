@@ -12,7 +12,6 @@ def knightMove(row,col):
     for r, c in possibleMoves:
         moves = row+r, col+c
         newPos.append(moves)
-    col = columns[col]
     
     #Filtering only valid positions in the board
     newPos = [(row,col) for row, col in newPos if row > 0 and col > 0 and row <= 8 and col <= 8]
