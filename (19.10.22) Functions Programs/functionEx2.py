@@ -6,7 +6,7 @@ def knightMove(row,col):
     possibleMoves = [(2, -1), (2, 1), (1, 2), (-1, 2), (-2, 1), (-2, -1), (-1, -2), (1, -2)]
     newPos = []
     newPosL = []
-    col = columns.index(col)
+    col = columns.index(col)+1
     
     #Applying deltas to current position
     for r, c in possibleMoves:
@@ -19,7 +19,7 @@ def knightMove(row,col):
    
     #Changing interger back to column letter
     for row, col in newPos:
-        letters = row, columns[col]
+        letters = row, columns[col-1]
         newPosL.append(letters)
     return newPosL
 
