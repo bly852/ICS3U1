@@ -3,3 +3,5 @@ def palindrome(string):
         return True
     else:
         return False
+
+print(palindrome('racecar'))
