@@ -2,8 +2,8 @@ import pygame, sys, time, random
 from pygame.locals import *
 
 #Window Dimensions
-w = 1368
-h = 640
+w = 800
+h = 600
 
 x = 240
 y = 150
