@@ -95,8 +95,8 @@ while True:
             if event.key == K_RIGHT or event.key == K_d:
                 x_dir = 7
             if event.key == K_UP or event.key == K_w or event.key == K_SPACE:
-                if SmFoot >= h-floorY:
-                    y -= 50
+                if SmFoot >= floorY:
+                    y -= r3
         if event.type == KEYUP:
             if event.key == K_LEFT or event.key == K_RIGHT or event.key == K_a or event.key == K_d:
                 x_dir = 0
