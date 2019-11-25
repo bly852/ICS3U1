@@ -30,6 +30,7 @@ pygame.display.set_icon(icon)
 #colours
 white = pygame.Color(255,255,255)
 black = pygame.Color(0,0,0)
+brown = pygame.Color(43, 0, 4)
 
 
 
@@ -52,6 +53,13 @@ def drawSm(x,y,r):
     
     #Mouth (Left to Right)
     #pygame.draw.circle(screen, black,)
+    
+    #Arms (Left to Right)
+    pygame.draw.rect(screen, brown, (x-r2*2-r//3, y+r*1.9, r3, r2//8), 0)
+    pygame.draw.rect(screen, brown, (x-r2*2-r//20, y+r2, r2//8, r3), 0)
+    
+    pygame.draw.rect(screen, brown, (x+r2, y+r*1.9, r3, r2//8), 0)
+    pygame.draw.rect(screen, brown, (x+r2+r//0.88, y+r2, r2//8, r3), 0)
 
 while True:
     screen.fill (pygame.Color (52, 235, 216))
@@ -101,11 +109,12 @@ while True:
             if event.key == K_LEFT or event.key == K_RIGHT or event.key == K_a or event.key == K_d:
                 x_dir = 0
     
-    #Snowman Radiuses
+    #Snowman Variables
     r2 = int(r*1.25)
     r3 = int(r2*1.25)
     SmHeight = r*2 + r2*2 + r3*2
     SmFoot = (SmHeight-(r2+r3)) + y
+    
     
     #Edge Detection
     if x < 0 + r3: 
