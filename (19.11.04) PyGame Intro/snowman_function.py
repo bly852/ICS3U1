@@ -5,8 +5,8 @@ from pygame.locals import *
 w = 800
 h = 600
 
-x = 240
-y = 150
+x = w//2
+y = h//2
 r = 50
 
 x_dir = 0
@@ -30,8 +30,8 @@ pygame.display.set_icon(icon)
 #colours
 white = pygame.Color(255,255,255)
 black = pygame.Color(0,0,0)
-brown = pygame.Color(43, 0, 4)
-
+brown = pygame.Color(43,0,4)
+orange = pygame.Color(245,139,0)
 
 
 def drawSm(x,y,r):
@@ -51,8 +51,8 @@ def drawSm(x,y,r):
     pygame.draw.circle(screen, black, (x-(r//3),y-(r//3)), r//10)
     pygame.draw.circle(screen, black, (x+(r//3),y-(r//3)), r//10)
     
-    #Mouth (Left to Right)
-    #pygame.draw.circle(screen, black,)
+    #Nose
+    pygame.draw.polygon(screen, orange, ((x-(r//6), y-(r//10)), (x+(r//6), y-(r//10)), (x, y+(r//5))), 0)
     
     #Arms (Left to Right)
     pygame.draw.rect(screen, brown, (x-r2*2-r//3, y+r*1.9, r3, r2//8), 0)
@@ -60,6 +60,11 @@ def drawSm(x,y,r):
     
     pygame.draw.rect(screen, brown, (x+r2, y+r*1.9, r3, r2//8), 0)
     pygame.draw.rect(screen, brown, (x+r2+r//0.88, y+r2, r2//8, r3), 0)
+    
+    #Hat
+    pygame.draw.rect(screen, black, (x-r, y-r, r*2, r//8), 0)
+    pygame.draw.rect(screen, black, (x-r//2, y-r*2, r, r), 0)
+
 
 while True:
     screen.fill (pygame.Color (52, 235, 216))
