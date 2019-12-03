@@ -5,6 +5,7 @@ pygame.init()
 x, y = 0, 300
 a, b = 750, 300
 s = 50
+collidedLastFrame = False
 
 width, height = 800, 600
 windowSize = (width, height)
@@ -50,11 +51,20 @@ while True:
     
     intX = intersectsX(x, a, s, s)
     intY = intersectsY(y, b, s, s)
-    
-    if intX and intY == True:
-        dirx *= -1
-        dira *= -1
         
+    if intX and intY == True:
+        if (dirx < 0 and dira < 0) or (dirx > 0 and dira > 0):
+            if dirx < dira:
+                dira *= -1
+            else:
+                dirx *= -1
+        if collidedLastFrame == False:
+            dirx *= -1
+            dira *= -1
+            collidedLastFrame = True
+    else:
+        collidedLastFrame == False
+    
     if x + s > width or x < 0:
         dirx *= -1
     if y + s > height or y < 0:
