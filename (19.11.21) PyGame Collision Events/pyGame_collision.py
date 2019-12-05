@@ -54,10 +54,13 @@ while True:
         
     if intX and intY == True:
         if (dirx < 0 and dira < 0) or (dirx > 0 and dira > 0):
-            if dirx < dira:
+            if (dirx < dira):
                 dira *= -1
+            elif (dirx > dira):
+                dirx *=-1
             else:
                 dirx *= -1
+                dira *= -1
         if collidedLastFrame == False:
             dirx *= -1
             dira *= -1
