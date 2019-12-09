@@ -111,8 +111,16 @@ while True:
                 if SmFoot >= floorY:
                     y -= r3
         if event.type == KEYUP:
-            if event.key == K_LEFT or event.key == K_RIGHT or event.key == K_a or event.key == K_d:
-                x_dir = 0
+            if event.key == K_LEFT:
+                if x_dir > 0:
+                    pass
+                else:
+                    x_dir = 0
+            if event.key == K_RIGHT:
+                if x_dir < 0:
+                    pass
+                else:
+                    x_dir = 0
     
     #Snowman Variables
     r2 = int(r*1.25)
