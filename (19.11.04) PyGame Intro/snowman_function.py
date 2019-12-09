@@ -111,12 +111,12 @@ while True:
                 if SmFoot >= floorY:
                     y -= r3
         if event.type == KEYUP:
-            if event.key == K_LEFT:
+            if event.key == K_LEFT or event.key == K_a:
                 if x_dir > 0:
                     pass
                 else:
                     x_dir = 0
-            if event.key == K_RIGHT:
+            if event.key == K_RIGHT or event.key == K_d:
                 if x_dir < 0:
                     pass
                 else:
