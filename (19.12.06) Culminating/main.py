@@ -5,7 +5,7 @@
 #           name: Brandon Ly
 #    description: Two players (Mr Chun & Mr Pileggi) running around the school collecting food for the food drive.
 
-import pygame, sys, time, random
+import pygame, random, os
 from pygame.locals import *
 
 # Colours
@@ -25,40 +25,39 @@ fpsClock = pygame.time.Clock()
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Culminating Assignment")
 
+
 def randomColour():
-    r, g, b = random.randint(0,255), random.randint(0,255), random.randint(0,255)
+    r, g, b = random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)
     colour = r, g, b
     return colour
 
 # Player Class
-class player:
-    def __init__(self, colour, x, y, size):
-        self.colour = colour
-        self.x = x
-        self.y = y
-        self.size = size
+class Player(pygame.sprite.Sprite):
+    def __init__(self, image):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(image).convert()
+        self.rect = self.image.get_rect()
         self.vel = 5
-        self.hitbox = ()
-
-    def draw (self, screen):
-        pygame.draw.rect(screen, self.colour, ((self.x, self.y), (self.size, self.size)), 0)
+        self.rect.center = (width / 2, height / 2)
 
 
-class food:
+class Food:
     def __init__(self, randomColour, x, y, size):
         self.colour = randomColour
         self.x = x
         self.y = y
         self.size = 20
 
+
+# sprite grouping
+all_sprites = pygame.sprite.Group()
+
 # players
-player1 = player(green, 40, 100, 50)
-player2 = player(red, 800, 200, 50)
+player1 = Player('stanley.png')
+all_sprites.add(player1)
 
 # main loop
 while True:
-    screen.fill(white)
-
     # Exit Game
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -81,17 +80,9 @@ while True:
     if keys[pygame.K_d] and player1.x < width - player1.size - player1.vel:
         player1.x += player1.vel
 
-    if keys[pygame.K_UP] and player2.y > player2.vel:
-        player2.y -= player2.vel
-    if keys[pygame.K_DOWN] and player2.y < height - player2.size - player2.vel:
-        player2.y += player2.vel
-    if keys[pygame.K_LEFT] and player2.x > player2.vel:
-        player2.x -= player2.vel
-    if keys[pygame.K_RIGHT] and player2.x < width - player2.size - player2.vel:
-        player2.x += player2.vel
+    all_sprites.update()
 
-    player1.draw(screen)
-    player2.draw(screen)
+    screen.fill(white)
+    all_sprites.draw(screen)
 
-    pygame.display.update()
     fpsClock.tick(60)
