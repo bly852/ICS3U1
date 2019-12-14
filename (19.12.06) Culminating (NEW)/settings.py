@@ -1,3 +1,5 @@
+# game variables and settings
+
 # colours
 blue = (66, 144, 245)
 red = (247, 59, 49)
@@ -12,3 +14,10 @@ lightgrey = (100, 100, 100)
 width = 1024
 height = 576
 fps = 60
+title = 'Food Wars'
+
+
+# tiles
+tileSize = 32
+gridWidth = width / tileSize
+gridHeight = height / tileSize
