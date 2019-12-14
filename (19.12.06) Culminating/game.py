@@ -11,6 +11,7 @@ from settings import *
 from sprites import *
 from os import path
 
+
 class Game:
     def __init__(self):
         # initialize game window
@@ -19,9 +20,9 @@ class Game:
         pygame.display.set_caption(title)
         self.fpsClock = pygame.time.Clock()
         pygame.key.set_repeat(1, 50)
-        self.loadData()
+        self.map_loader()
 
-    def loadData(self):
+    def map_loader(self):
         game_folder = path.dirname(__file__)
         map_folder = path.join(game_folder, 'maps')
         self.map_data = []
@@ -76,14 +77,8 @@ class Game:
             if event.type == pygame.QUIT:
                 self.quit()
             if event.type == KEYDOWN:
-                if event.key == K_a:
-                    self.player.move(dirx=-1)
-                if event.key == K_d:
-                    self.player.move(dirx=1)
-                if event.key == K_w:
-                    self.player.move(diry=-1)
-                if event.key == K_s:
-                    self.player.move(diry=1)
+                if event.key == K_ESCAPE:
+                    self.quit()
 
     def show_start_screen(self):
         # game start screen

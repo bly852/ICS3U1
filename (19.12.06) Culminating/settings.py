@@ -21,3 +21,6 @@ title = 'Food Wars'
 tileSize = 32
 gridWidth = width / tileSize
 gridHeight = height / tileSize
+
+# player settings
+player_speed = 500
