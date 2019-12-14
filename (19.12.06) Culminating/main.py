@@ -75,7 +75,6 @@ class Game():
     def run(self):
         self.running = True
         while self.running:
-            self.events()
             self.update()
             self.draw()
 
@@ -94,23 +93,17 @@ class Game():
         self.all_sprites.draw(self.screen)
         pg.display.flip()
 
-    def events(self):
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
-                    pygame.quit()
-                    sys.exit()
 
 
-
+g = Game()
 
 while True:
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            pygame.quit()
+            sys.exit()
+        if event.type == KEYDOWN:
+            if event.key == K_ESCAPE:
+                pygame.quit()
+                sys.exit()
     fpsClock.tick(60)
-
-    all_sprites.update()
-
-    screen.fill(white)
-    all_sprites.draw(screen)
