@@ -27,8 +27,8 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_s]:
             self.velY = player_speed
 
-    def wall_collision(self, dir):
-        if dir == 'x':
+    def wall_collision(self, axis):
+        if axis == 'x':
             collides = pygame.sprite.spritecollide(self, self.game.walls, False)
             if collides:
                 if self.velX > 0:
@@ -37,7 +37,7 @@ class Player(pygame.sprite.Sprite):
                     self.x = collides[0].rect.right
                 self.velX = 0
                 self.rect.x = self.x
-        if dir == 'y':
+        if axis == 'y':
             collides = pygame.sprite.spritecollide(self, self.game.walls, False)
             if collides:
                 if self.velY > 0:

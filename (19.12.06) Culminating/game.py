@@ -10,6 +10,7 @@ from pygame.locals import *
 from settings import *
 from sprites import *
 from os import path
+from map import *
 
 
 class Game:
@@ -20,26 +21,24 @@ class Game:
         pygame.display.set_caption(title)
         self.fpsClock = pygame.time.Clock()
         pygame.key.set_repeat(1, 50)
-        self.map_loader()
+        self.data_loader()
 
-    def map_loader(self):
+    def data_loader(self):
         game_folder = path.dirname(__file__)
         map_folder = path.join(game_folder, 'maps')
-        self.map_data = []
-        with open(path.join(map_folder, 'map.txt')) as level1:
-            for line in level1:
-                self.map_data.append(line)
+        self.map = Map(path.join(map_folder, 'biggerMap.txt'))
 
     def new(self):
         # new game loop
         self.all_sprites = pygame.sprite.Group()
         self.walls = pygame.sprite.Group()
-        for row, tiles in enumerate(self.map_data):
+        for row, tiles in enumerate(self.map.data):
             for col, tile in enumerate(tiles):
                 if tile == 'X':
                     Wall(self, col, row)
                 if tile == "S":
                     self.player = Player(self, col, row)
+        self.camera = Camera(self.map.width, self.map.height)
 
     def run(self):
         # game loop
@@ -57,6 +56,7 @@ class Game:
     def update(self):
         # game loop - update
         self.all_sprites.update()
+        self.camera.update(self.player)
 
     def draw_grid(self):
         for x in range(0, width, tileSize):
@@ -67,8 +67,8 @@ class Game:
     def draw(self):
         # game loop - draw
         self.screen.fill(black)
-        self.draw_grid()
-        self.all_sprites.draw(self.screen)
+        for sprite in self.all_sprites:
+            self.screen.blit(sprite.image, self.camera.apply(sprite))
         pygame.display.flip()
 
     def events(self):
@@ -88,9 +88,9 @@ class Game:
         # game over screen
         pass
 
-g = Game()
-g.show_start_screen()
+game = Game()
+game.show_start_screen()
 while True:
-    g.new()
-    g.run()
-    g.show_game_over()
+    game.new()
+    game.run()
+    game.show_game_over()
