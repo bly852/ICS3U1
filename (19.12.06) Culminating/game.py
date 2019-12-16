@@ -20,7 +20,6 @@ class Game:
         self.screen = pygame.display.set_mode((width, height))
         pygame.display.set_caption(title)
         self.fpsClock = pygame.time.Clock()
-        pygame.key.set_repeat(1, 50)
         self.data_loader()
 
     def data_loader(self):
@@ -87,6 +86,7 @@ class Game:
     def show_game_over(self):
         # game over screen
         pass
+
 
 game = Game()
 game.show_start_screen()
