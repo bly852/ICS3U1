@@ -18,9 +18,11 @@ title = 'Food Wars'
 
 
 # tiles
-tileSize = 32
+tileSize = 64
 gridWidth = width / tileSize
 gridHeight = height / tileSize
 
 # player settings
 player_speed = 500
+
+floor_image = 'marble_floor.png'

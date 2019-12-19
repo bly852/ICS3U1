@@ -70,3 +70,16 @@ class Wall(pygame.sprite.Sprite):
         self.y = y
         self.rect.x = x * tileSize
         self.rect.y = y * tileSize
+
+
+class Floor(pygame.sprite.Sprite):
+    def __init__(self, game, x, y):
+        self.groups = game.all_sprites, game.floor
+        pygame.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        self.image = game.floor_image
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+        self.rect.x = x * tileSize
+        self.rect.y = y * tileSize
