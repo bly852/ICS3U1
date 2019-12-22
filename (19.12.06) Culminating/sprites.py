@@ -4,7 +4,7 @@ from settings import *
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, game, x, y):
+    def __init__(self, game, x, y, player_num):
         self.groups = game.all_sprites
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.game = game
@@ -14,18 +14,29 @@ class Player(pygame.sprite.Sprite):
         self.velX, self.velY = 0, 0
         self.x = x * tileSize
         self.y = y * tileSize
+        self.playerNum = player_num
 
     def get_keys(self):
         self.velX, self.velY = 0, 0
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_a]:
-            self.velX = -player_speed
-        if keys[pygame.K_d]:
-            self.velX = player_speed
-        if keys[pygame.K_w]:
-            self.velY = -player_speed
-        if keys[pygame.K_s]:
-            self.velY = player_speed
+        if self.playerNum == 1:
+            if keys[pygame.K_a]:
+                self.velX = -player_speed
+            if keys[pygame.K_d]:
+                self.velX = player_speed
+            if keys[pygame.K_w]:
+                self.velY = -player_speed
+            if keys[pygame.K_s]:
+                self.velY = player_speed
+        else:
+            if keys[pygame.K_LEFT]:
+                self.velX = -player_speed
+            if keys[pygame.K_RIGHT]:
+                self.velX = player_speed
+            if keys[pygame.K_UP]:
+                self.velY = -player_speed
+            if keys[pygame.K_DOWN]:
+                self.velY = player_speed
 
     def wall_collision(self, axis):
         if axis == 'x':
@@ -57,14 +68,12 @@ class Player(pygame.sprite.Sprite):
         self.wall_collision('y')
 
 
-
 class Wall(pygame.sprite.Sprite):
     def __init__(self, game, x, y):
         self.groups = game.all_sprites, game.walls
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image = pygame.Surface((tileSize, tileSize))
-        self.image.fill(blue)
+        self.image = game.wall_image
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y

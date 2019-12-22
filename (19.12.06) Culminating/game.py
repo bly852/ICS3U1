@@ -28,6 +28,7 @@ class Game:
         image_folder = path.join(game_folder, 'images')
         self.map = Map(path.join(map_folder, 'biggerMap.txt'))
         self.floor_image = pygame.image.load(path.join(image_folder, floor_image)).convert_alpha()
+        self.wall_image = pygame.image.load(path.join(image_folder, wall_image)).convert_alpha()
 
     def new(self):
         # new game loop
@@ -38,11 +39,11 @@ class Game:
             for col, tile in enumerate(tiles):
                 if tile == 'X':
                     Wall(self, col, row)
-                if tile == '.':
+                else:
                     Floor(self, col, row)
-                if tile == "S":
+                if tile == "1":
                     Floor(self, col, row)
-                    self.player = Player(self, col, row)
+                    self.player = Player(self, col, row, 1)
         self.camera = Camera(self.map.width, self.map.height)
 
     def run(self):
@@ -71,7 +72,6 @@ class Game:
 
     def draw(self):
         # game loop - draw
-        self.screen.fill(lightgrey)
         for sprite in self.all_sprites:
             self.screen.blit(sprite.image, self.camera.apply(sprite))
         pygame.display.flip()
