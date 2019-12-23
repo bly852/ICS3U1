@@ -8,12 +8,12 @@ class Player(pygame.sprite.Sprite):
         self.groups = game.all_sprites
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image = pygame.Surface((tileSize, tileSize))
-        self.image.fill(green)
+        self.image = game.player_image
+        self.image = pygame.transform.rotate(self.game.player_image, 90)
         self.rect = self.image.get_rect()
         self.velX, self.velY = 0, 0
-        self.x = x * tileSize
-        self.y = y * tileSize
+        self.x = x * tileSize - tileSize
+        self.y = y * tileSize - tileSize
         self.playerNum = player_num
 
     def get_keys(self):
@@ -38,6 +38,27 @@ class Player(pygame.sprite.Sprite):
             if keys[pygame.K_DOWN]:
                 self.velY = player_speed
 
+    def direction(self):
+        if self.velX > 0:
+            if self.velY < 0:
+                self.image = pygame.transform.rotate(self.game.player_image, 45)
+            elif self.velY > 0:
+                self.image = pygame.transform.rotate(self.game.player_image, -45)
+            else:
+                self.image = pygame.transform.rotate(self.game.player_image, 0)
+        elif self.velX < 0:
+            if self.velY < 0:
+                self.image = pygame.transform.rotate(self.game.player_image, 135)
+            elif self.velY > 0:
+                self.image = pygame.transform.rotate(self.game.player_image, -135)
+            else:
+                self.image = pygame.transform.rotate(self.game.player_image, 180)
+        else:
+            if self.velY < 0:
+                self.image = pygame.transform.rotate(self.game.player_image, 90)
+            elif self.velY > 0:
+                self.image = pygame.transform.rotate(self.game.player_image, -90)
+
     def wall_collision(self, axis):
         if axis == 'x':
             collides = pygame.sprite.spritecollide(self, self.game.walls, False)
@@ -60,6 +81,7 @@ class Player(pygame.sprite.Sprite):
 
     def update(self):
         self.get_keys()
+        self.direction()
         self.x += self.velX * self.game.dt
         self.y += self.velY * self.game.dt
         self.rect.x = self.x

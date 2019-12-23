@@ -18,7 +18,6 @@ class Game:
         # initialize game window
         pygame.init()
         self.screen = pygame.display.set_mode((width, height))
-        pygame.display.set_caption(title)
         self.fpsClock = pygame.time.Clock()
         self.data_loader()
 
@@ -29,6 +28,7 @@ class Game:
         self.map = Map(path.join(map_folder, 'biggerMap.txt'))
         self.floor_image = pygame.image.load(path.join(image_folder, floor_image)).convert_alpha()
         self.wall_image = pygame.image.load(path.join(image_folder, wall_image)).convert_alpha()
+        self.player_image = pygame.image.load(path.join(image_folder, player_image)).convert_alpha()
 
     def new(self):
         # new game loop
@@ -72,6 +72,7 @@ class Game:
 
     def draw(self):
         # game loop - draw
+        pygame.display.set_caption("{} | FPS: {:.0f}".format(title ,self.fpsClock.get_fps()))
         for sprite in self.all_sprites:
             self.screen.blit(sprite.image, self.camera.apply(sprite))
         pygame.display.flip()
