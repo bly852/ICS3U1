@@ -1,7 +1,6 @@
 import pygame
 from settings import *
 
-
 class Map:
     def __init__(self, filename):
         self.data = []
@@ -27,7 +26,6 @@ class Camera:
     def update(self, target):
         x = -target.rect.x + int(width / 2)
         y = -target.rect.y + int(height / 2)
-        self.camera = pygame.Rect(x, y, self.width, self.height)
 
         # camera limits
         x = min(0, x)

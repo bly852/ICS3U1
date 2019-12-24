@@ -41,9 +41,14 @@ class Game:
                     Wall(self, col, row)
                 else:
                     Floor(self, col, row)
+        for row, tiles in enumerate(self.map.data):
+            for col, tile in enumerate(tiles):
                 if tile == "1":
                     Floor(self, col, row)
                     self.player = Player(self, col, row, 1)
+                elif tile == "2":
+                    Floor(self, col, row)
+                    self.player = Player(self, col, row, 2)
         self.camera = Camera(self.map.width, self.map.height)
 
     def run(self):
