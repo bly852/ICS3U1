@@ -1,5 +1,6 @@
 def hyp(a,b):
-    #Function takes A and B and puts them into the Pythagorean Theorem returning C
+    """hyp (a, b) - returns the value of c in the pythagorean theorem based on the values of a and b"""
     return (a**2 + b**2)**0.5
+
 
 print(hyp(214,154))

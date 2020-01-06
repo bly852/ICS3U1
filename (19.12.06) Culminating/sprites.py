@@ -114,3 +114,7 @@ class Floor(pygame.sprite.Sprite):
         self.y = y
         self.rect.x = x * tileSize
         self.rect.y = y * tileSize
+
+
+class Food(pygame.sprite.Sprite):
+    def __init__(self, game, x, y):

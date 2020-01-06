@@ -1,25 +1,27 @@
-def knightMove(row,col):
-    #Takes in knight's current position and returns possible moves
-    
-    #Deltas and Column Names
-    columns = ["A", "B", "C", "D", "E", "F", "G", "H"]
-    possibleMoves = [(2, -1), (2, 1), (1, 2), (-1, 2), (-2, 1), (-2, -1), (-1, -2), (1, -2)]
-    newPos = []
-    newPosL = []
-    col = columns.index(col)+1
-    
-    #Applying deltas to current position
-    for r, c in possibleMoves:
-        moves = row+r, col+c
-        newPos.append(moves)
-    
-    #Filtering only valid positions in the board
-    newPos = [(row,col) for row, col in newPos if row > 0 and col > 0 and row <= 8 and col <= 8]
-   
-    #Changing interger back to column letter
-    for row, col in newPos:
-        letters = row, columns[col-1]
-        newPosL.append(letters)
-    return newPosL
+def knight_move(row, col):
+    """knight_move (row, col) - returns all possible movements for the
+    knight in chess based on the parameters of its current row and column"""
 
-print(knightMove(7, "D"))
+    # Deltas and Column Names
+    columns = ["A", "B", "C", "D", "E", "F", "G", "H"]
+    possible_moves = [(2, -1), (2, 1), (1, 2), (-1, 2), (-2, 1), (-2, -1), (-1, -2), (1, -2)]
+    new_pos = []
+    new_pos_l = []
+    col = columns.index(col) + 1
+
+    # Applying deltas to current position
+    for r, c in possible_moves:
+        moves = row + r, col + c
+        new_pos.append(moves)
+
+    # Filtering only valid positions in the board
+    new_pos = [(row, col) for row, col in new_pos if 0 < row <= 8 and 0 < col <= 8]
+
+    # Changing integer back to column letter
+    for row, col in new_pos:
+        letters = row, columns[col - 1]
+        new_pos_l.append(letters)
+    return new_pos_l
+
+
+print(knight_move(7, "D"))
