@@ -25,6 +25,7 @@ class Game:
         game_folder = path.dirname(__file__)
         map_folder = path.join(game_folder, 'maps')
         image_folder = path.join(game_folder, 'images')
+        food_folder = path.join(image_folder, 'food')
         self.map = Map(path.join(map_folder, 'biggerMap.txt'))
         self.floor_image = pygame.image.load(path.join(image_folder, floor_image)).convert_alpha()
         self.wall_image = pygame.image.load(path.join(image_folder, wall_image)).convert_alpha()
@@ -35,6 +36,7 @@ class Game:
         self.all_sprites = pygame.sprite.Group()
         self.walls = pygame.sprite.Group()
         self.floor = pygame.sprite.Group()
+        self.food = pygame.sprite.Group()
         for row, tiles in enumerate(self.map.data):
             for col, tile in enumerate(tiles):
                 if tile == 'X':
