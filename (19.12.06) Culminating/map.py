@@ -1,6 +1,7 @@
 import pygame
 from settings import *
 
+
 class Map:
     def __init__(self, filename):
         self.data = []

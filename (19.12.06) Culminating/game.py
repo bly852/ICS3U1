@@ -22,21 +22,26 @@ class Game:
         self.data_loader()
 
     def data_loader(self):
+        # loads paths for all assets
         game_folder = path.dirname(__file__)
         map_folder = path.join(game_folder, 'maps')
         image_folder = path.join(game_folder, 'images')
         food_folder = path.join(image_folder, 'food')
+        self.food_image = pygame.image.load(path.join(food_folder, 'baconcheeseburger1.png'))
         self.map = Map(path.join(map_folder, 'biggerMap.txt'))
-        self.floor_image = pygame.image.load(path.join(image_folder, floor_image)).convert_alpha()
-        self.wall_image = pygame.image.load(path.join(image_folder, wall_image)).convert_alpha()
-        self.player_image = pygame.image.load(path.join(image_folder, player_image)).convert_alpha()
+        self.floor_image = pygame.image.load(path.join(image_folder, floor_image))
+        self.wall_image = pygame.image.load(path.join(image_folder, wall_image))
+        self.player_image = pygame.image.load(path.join(image_folder, player_image))
 
     def new(self):
         # new game loop
+        self.joystick = pygame.joystick.Joystick(0)
+        self.joystick.init()
         self.all_sprites = pygame.sprite.Group()
         self.walls = pygame.sprite.Group()
         self.floor = pygame.sprite.Group()
         self.food = pygame.sprite.Group()
+        self.camera = Camera(self.map.width, self.map.height)
         for row, tiles in enumerate(self.map.data):
             for col, tile in enumerate(tiles):
                 if tile == 'X':
@@ -51,7 +56,8 @@ class Game:
                 elif tile == "2":
                     Floor(self, col, row)
                     self.player = Player(self, col, row, 2)
-        self.camera = Camera(self.map.width, self.map.height)
+        for x in range(200):
+            Food(self, random.randint(1, 500), random.randint(1, 1000))
 
     def run(self):
         # game loop
@@ -71,15 +77,9 @@ class Game:
         self.all_sprites.update()
         self.camera.update(self.player)
 
-    def draw_grid(self):
-        for x in range(0, width, tileSize):
-            pygame.draw.line(self.screen, lightgrey, (x, 0), (x, height))
-        for y in range(0, height, tileSize):
-            pygame.draw.line(self.screen, lightgrey, (0, y), (width, y))
-
     def draw(self):
         # game loop - draw
-        pygame.display.set_caption("{} | FPS: {:.0f}".format(title ,self.fpsClock.get_fps()))
+        pygame.display.set_caption("{} | FPS: {:.0f}".format(title, self.fpsClock.get_fps()))
         for sprite in self.all_sprites:
             self.screen.blit(sprite.image, self.camera.apply(sprite))
         pygame.display.flip()
