@@ -10,9 +10,9 @@ yellow = (255, 255, 0)
 lightgrey = (100, 100, 100)
 
 
-# game options
-width = 1024
-height = 576
+# game options (640 x 480 or 800 x 600 or 1024 x 767 or 1280 x 1024)
+width = 800
+height = 600
 fps = 240
 title = 'Food Wars'
 
