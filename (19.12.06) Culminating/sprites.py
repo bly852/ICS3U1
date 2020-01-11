@@ -38,9 +38,6 @@ class Player(pygame.sprite.Sprite):
             if keys[pygame.K_DOWN]:
                 self.velY = player_speed
 
-        if self.playerNum == 1:
-            pass
-
     def direction(self):
         if self.velX > 0:
             if self.velY < 0:

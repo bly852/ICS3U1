@@ -35,8 +35,7 @@ class Game:
 
     def new(self):
         # new game loop
-        self.joystick = pygame.joystick.Joystick(0)
-        self.joystick.init()
+
         self.all_sprites = pygame.sprite.Group()
         self.walls = pygame.sprite.Group()
         self.floor = pygame.sprite.Group()
