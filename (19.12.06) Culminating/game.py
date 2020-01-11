@@ -54,8 +54,8 @@ class Game:
                 elif tile == "2":
                     Floor(self, col, row)
                     self.player = Player(self, col, row, 2)
-        for x in range(200):
-            Food(self, random.randint(1, 500), random.randint(1, 1000))
+        for x in range((self.map.tileWidth*self.map.tileHeight)//food_spawn_rate):
+            Food(self, random.randint(1, self.map.tileWidth-2), random.randint(1, self.map.tileHeight-2))
 
     def run(self):
         # game loop
