@@ -46,6 +46,8 @@ class Game:
                     Wall(self, col, row)
                 else:
                     Floor(self, col, row)
+        for x in range((self.map.tileWidth*self.map.tileHeight)//food_spawn_rate):
+            Food(self, random.randint(1, self.map.tileWidth-2), random.randint(1, self.map.tileHeight-2))
         for row, tiles in enumerate(self.map.data):
             for col, tile in enumerate(tiles):
                 if tile == "1":
@@ -54,8 +56,6 @@ class Game:
                 elif tile == "2":
                     Floor(self, col, row)
                     self.player = Player(self, col, row, 2)
-        for x in range((self.map.tileWidth*self.map.tileHeight)//food_spawn_rate):
-            Food(self, random.randint(1, self.map.tileWidth-2), random.randint(1, self.map.tileHeight-2))
 
     def run(self):
         # game loop
@@ -67,6 +67,7 @@ class Game:
             self.draw()
 
     def quit(self):
+        print("You got a score of {}!".format(self.player.score))
         pygame.quit()
         sys.exit()
 

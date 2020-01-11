@@ -10,9 +10,9 @@ yellow = (255, 255, 0)
 lightgrey = (100, 100, 100)
 
 
-# game options
+# game options (windows size either 640x480 or 800x600 or 1024x768 or 1280x1024)
 width = 1024
-height = 576
+height = 768
 fps = 240
 title = 'Food Wars'
 
@@ -31,4 +31,4 @@ wall_image = 'mask_32x_0.png'
 
 
 # food settings
-food_spawn_rate = 150
+food_spawn_rate = 100 # lower = more food

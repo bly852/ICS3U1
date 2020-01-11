@@ -15,6 +15,7 @@ class Player(pygame.sprite.Sprite):
         self.x = x * tileSize - tileSize
         self.y = y * tileSize - tileSize
         self.playerNum = player_num
+        self.score = 0
 
     def get_keys(self):
         self.velX, self.velY = 0, 0
@@ -79,6 +80,11 @@ class Player(pygame.sprite.Sprite):
                 self.velY = 0
                 self.rect.y = self.y
 
+    def food_collision(self):
+        collides = pygame.sprite.spritecollide(self, self.game.food, True)
+        if collides:
+            self.score +=1
+
     def update(self):
         self.get_keys()
         self.direction()
@@ -88,6 +94,7 @@ class Player(pygame.sprite.Sprite):
         self.wall_collision('x')
         self.rect.y = self.y
         self.wall_collision('y')
+        self.food_collision()
 
 
 class Wall(pygame.sprite.Sprite):
