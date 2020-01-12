@@ -117,11 +117,11 @@ class Game:
             self.screen.blit(sprite.image, self.camera.apply(sprite))
 
         # render and blit player score to the screen
-        self.player_score = main_font.render(' Score: {}'.format(self.player.score), False, black)
+        self.player_score = main_font.render(' Score: {}'.format(self.player.score), False, white)
         self.screen.blit(self.player_score, (0, 25))
 
         # rener and blit remaining time to the screen
-        self.player_score = main_font.render(' Time Left: {} seconds'.format(time_limit-(int(self.elapsed_time))), False, black)
+        self.player_score = main_font.render(' Time Left: {} seconds'.format(time_limit-(int(self.elapsed_time))), False, white)
         self.screen.blit(self.player_score, (0, 0))
 
         # flip render to the screen
