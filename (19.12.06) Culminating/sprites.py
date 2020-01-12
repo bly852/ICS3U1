@@ -17,8 +17,8 @@ class Player(pygame.sprite.Sprite):
     """
     def __init__(self, game, x, y, player_num):
         """
-        initalizes a player sprite when an instance is created in the game parameter,
-        at the x and y paramters, and player num
+        initalizes a player sprite when an instance is created in the game
+        parameter,at the x and y paramters, and player num
         """
         self.groups = game.all_sprites
         pygame.sprite.Sprite.__init__(self, self.groups)
@@ -59,7 +59,8 @@ class Player(pygame.sprite.Sprite):
 
     def direction(self):
         """
-        rotates the player sprite based on the current direction and new direction
+        rotates the player sprite based on the current direction and new
+        direction
         """
         if self.velX > 0:
             if self.velY < 0:
@@ -83,8 +84,8 @@ class Player(pygame.sprite.Sprite):
 
     def wall_collision(self, axis):
         """
-        checks for player collision with the all wall sprites on the axis given
-        and prevents player movement onto it
+        checks for player collision with the all wall sprites on the axis
+        given and prevents player movement onto it
         """
         if axis == 'x':
             collides = pygame.sprite.spritecollide(self, self.game.walls, False)
@@ -107,8 +108,7 @@ class Player(pygame.sprite.Sprite):
 
     def food_collision(self):
         """
-        checks for player collision with all food sprites killing any sprites
-        it comes collides with and adding 1 to the players score value
+        checks for player collision with all food sprites killing any sprites it comes collides with and adding 1 to the players score value
         """
         collides = pygame.sprite.spritecollide(self, self.game.food, True)
         if collides:
@@ -135,8 +135,8 @@ class Wall(pygame.sprite.Sprite):
     """
     def __init__(self, game, x, y):
         """
-        initalizes a wall sprite when an instance is created in the game parameter,
-        at the x and y paramters
+        initalizes a wall sprite when an instance is create in the game
+        parameter, at the x and y paramters
         """
         self.groups = game.all_sprites, game.walls
         pygame.sprite.Sprite.__init__(self, self.groups)
@@ -167,8 +167,8 @@ class Floor(pygame.sprite.Sprite):
     """
     def __init__(self, game, x, y):
         """
-        initalizes a floor sprite when an instance is created in the game parameter,
-        at the x and y paramters
+        initalizes a floor sprite when an instance is created in the game
+        parameter, at the x and y paramters
         """
         self.groups = game.all_sprites, game.floor
         pygame.sprite.Sprite.__init__(self, self.groups)
@@ -187,8 +187,8 @@ class Food(pygame.sprite.Sprite):
     """
     def __init__(self, game, x, y):
         """
-        initalizes a food sprite when an instance is created in the game parameter,
-        at the x and y paramters
+        initalizes a food sprite when an instance is created in the game
+        parameter, at the x and y paramters
         """
         self.groups = game.all_sprites, game.food
         pygame.sprite.Sprite.__init__(self, self.groups)

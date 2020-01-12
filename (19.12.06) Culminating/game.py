@@ -132,8 +132,8 @@ class Game:
 
     def draw(self):
         """
-        part of the game loop - draws the new sprite positions
-        and text to the screen
+        part of the game loop - draws the new sprite positions and text to the
+        screen
         """
         pygame.display.set_caption("{} | FPS: {:.0f} | Score: {}".format(title, self.fpsClock.get_fps(), self.player.score))
 
@@ -158,7 +158,7 @@ class Game:
         part of the game loop - checks for events
         """
 
-        #
+        # adds delta time every frame to check
         self.elapsed_time += self.dt
         if self.elapsed_time >= time_limit:
             self.playing = False
@@ -167,8 +167,8 @@ class Game:
         # a new food sprite has been spawned
         self.foodTimer += self.dt
 
-        # generates new food sprites based on timer if the amount of food sprites
-        # is less than amount of initial food sprites
+        # generates new food sprites based on timer if the amount of food
+        # sprites is less than amount of initial food sprites
         if len(self.food) < (self.map.tileWidth*self.map.tileHeight)//food_spawn_rate:
             if self.foodTimer > food_spawn_timer:
                 Food(self, random.randint(0, self.map.tileWidth), random.randint(0, self.map.tileHeight))
