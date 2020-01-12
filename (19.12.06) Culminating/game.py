@@ -8,6 +8,7 @@
 # main game script
 
 import pygame, random, sys
+import pygame_textinput as pytxt
 from pygame.locals import *
 from settings import *
 from sprites import *
@@ -80,9 +81,10 @@ class Game:
         """
         main game loop
         """
+        self.playing = True
         self.elapsed_time = 0
         self.foodTimer = 0
-        while True:
+        while self.playing:
             self.dt = self.fpsClock.tick(fps) / 1000
             self.events()
             self.update()
@@ -136,7 +138,7 @@ class Game:
         #
         self.elapsed_time += self.dt
         if self.elapsed_time >= time_limit:
-            self.quit()
+            self.playing = False
 
         # adds delta time every frame to check how much time has passed since
         # a new food sprite has been spawned
