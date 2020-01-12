@@ -64,7 +64,7 @@ class Game:
 
         # generates initial food sprites
         for x in range((self.map.tileWidth*self.map.tileHeight)//food_spawn_rate):
-            Food(self, random.randint(1, self.map.tileWidth-2), random.randint(1, self.map.tileHeight-2))
+            Food(self, random.randint(0, self.map.tileWidth), random.randint(0, self.map.tileHeight))
 
         # generates player sprites
         for row, tiles in enumerate(self.map.data):
@@ -123,7 +123,7 @@ class Game:
         # is less than amount of initial food sprites
         if len(self.food) < (self.map.tileWidth*self.map.tileHeight)//food_spawn_rate:
             if self.foodTimer > food_spawn_timer:
-                Food(self, random.randint(1, self.map.tileWidth-2), random.randint(1, self.map.tileHeight-2))
+                Food(self, random.randint(0, self.map.tileWidth), random.randint(0, self.map.tileHeight))
                 self.foodTimer = 0
 
         # checks for events to exit the game

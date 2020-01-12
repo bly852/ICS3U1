@@ -140,6 +140,18 @@ class Wall(pygame.sprite.Sprite):
         self.rect.x = x * tileSize
         self.rect.y = y * tileSize
 
+    def food_collision(self):
+        """
+        kills the food sprite if it collides with a wall sprite
+        """
+        collides = pygame.sprite.spritecollide(self, self.game.food, True)
+
+    def update(self):
+        """
+        updates the wall sprite every frame
+        """
+        self.food_collision()
+
 
 class Floor(pygame.sprite.Sprite):
     """
