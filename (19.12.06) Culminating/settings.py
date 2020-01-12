@@ -1,5 +1,6 @@
 # game variables and settings
 
+
 # colours
 blue = (66, 144, 245)
 red = (247, 59, 49)
@@ -33,4 +34,4 @@ wall_image = 'mask_32x_0.png'
 
 
 # food settings
-food_spawn_rate = 100 # lower = more food
+food_spawn_rate = 100 # lower number = more food
