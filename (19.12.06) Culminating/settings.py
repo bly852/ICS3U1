@@ -44,3 +44,7 @@ wall_image = 'mask_32x_0.png'
 # food settings
 food_spawn_rate = 100 # lower number = more food
 food_spawn_timer = 1 # seconds between food spawn
+
+
+# text settings
+default_font = 'Segoe UI'

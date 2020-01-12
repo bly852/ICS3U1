@@ -146,10 +146,10 @@ class Game:
         pygame.draw.rect(self.screen, lightgrey, (5, 5, 275, 50), 0)
 
         # draws time left to the screen
-        self.draw_text(' Time Left: {} seconds'.format(time_limit-(int(self.elapsed_time))), 'Segoe UI', 25, True, white, 0, 0)
+        self.draw_text(' Time Left: {} seconds'.format(time_limit-(int(self.elapsed_time))), default_font, 25, True, white, 0, 0)
 
         # draws player score to the screen
-        self.draw_text(' Score: {}'.format(self.player.score), 'Segoe UI', 25, True, white, 0, 25)
+        self.draw_text(' Score: {}'.format(self.player.score), default_font, 25, True, white, 0, 25)
 
         # flip render to the screen
         pygame.display.flip()
@@ -187,7 +187,18 @@ class Game:
         """
         shows the games start screen
         """
-        pass
+        # wipes the screen to black
+        self.screen.fill(black)
+
+        # draws splash screen text
+        self.draw_text('FOOD WARS', default_font, 100, True, white, width//2, height//2-100, align = 'center')
+        self.draw_text('WASD to move', default_font, 25, True, white, width//2, height//2+25, align = 'center')
+        self.draw_text('Pickup food to get points', default_font, 25, True, white, width//2, height//2+50, align = 'center')
+        self.draw_text('Press any key to start', default_font, 50, True, white, width//2, height//2+175, align = 'center')
+
+        # flips final screen to display
+        pygame.display.flip()
+        self.wait_for_key()
 
     def show_game_over(self):
         """
@@ -201,10 +212,10 @@ class Game:
         self.screen.blit(self.game_over, (0,0))
 
         # draws the game over text
-        self.draw_text('GAME OVER', 'Segoe UI', 100, True, white, width//2, height//2-100, align = 'center')
-        self.draw_text('SCORE: {}'.format(self.player.score), 'Segoe UI', 50, True, white, width//2, height//2+75, align = 'center')
-        self.draw_text('Press Escape to quit the game', 'Segoe UI', 25, True, white, width//2, height//2+150, align = 'center')
-        self.draw_text('Press any other key to play again', 'Segoe UI', 25, True, white, width//2, height//2+175, align = 'center')
+        self.draw_text('GAME OVER', default_font, 100, True, white, width//2, height//2-100, align = 'center')
+        self.draw_text('SCORE: {}'.format(self.player.score), default_font, 50, True, white, width//2, height//2+75, align = 'center')
+        self.draw_text('Press Escape to quit the game', default_font, 25, True, white, width//2, height//2+150, align = 'center')
+        self.draw_text('Press any other key to play again', default_font, 25, True, white, width//2, height//2+175, align = 'center')
 
         # flips final screen to display
         pygame.display.flip()
@@ -224,9 +235,12 @@ class Game:
                     self.quit()
                 # if escape is pressed quit the game, otherwise start new game
                 if event.type == KEYDOWN:
-                    if event.key == K_ESCAPE:
-                        self.quit()
-                    else:
+                    try:
+                        if event.key == K_ESCAPE:
+                            self.quit()
+                        else:
+                            waiting = False
+                    except AttributeError:
                         waiting = False
 
 
