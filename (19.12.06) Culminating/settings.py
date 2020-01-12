@@ -21,6 +21,7 @@ lightgrey = (100, 100, 100)
 width, height = 800, 600 # (640x480 or 800x600 or 1024x768 or 1280x1024)
 fps = 240 # fps limit
 title = 'Food Wars'
+time_limit = 120 # game time limit in seconds
 
 
 # tiles

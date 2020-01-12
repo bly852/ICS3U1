@@ -13,6 +13,7 @@ from settings import *
 from sprites import *
 from os import path
 from map import *
+from gui import *
 
 
 class Game:
@@ -53,7 +54,6 @@ class Game:
         # initializes the camera for the player
         self.camera = Camera(self.map.width, self.map.height)
 
-
         # generates the map based on a text file given
 
         # generates walls and floors
@@ -82,6 +82,7 @@ class Game:
         """
         main game loop
         """
+        self.elapsed_time = 0
         self.foodTimer = 0
         while True:
             self.dt = self.fpsClock.tick(fps) / 1000
@@ -106,17 +107,35 @@ class Game:
 
     def draw(self):
         """
-        part of the game loop - draws the new sprite positions to the screen
+        part of the game loop - draws the new sprite positions
+        and text to the screen
         """
         pygame.display.set_caption("{} | FPS: {:.0f} | Score: {}".format(title, self.fpsClock.get_fps(), self.player.score))
+
+        # blit all sprites to the screen
         for sprite in self.all_sprites:
             self.screen.blit(sprite.image, self.camera.apply(sprite))
+
+        # render and blit player score to the screen
+        self.player_score = main_font.render(' Score: {}'.format(self.player.score), False, black)
+        self.screen.blit(self.player_score, (0, 25))
+
+        # rener and blit remaining time to the screen
+        self.player_score = main_font.render(' Time Left: {} seconds'.format(time_limit-(int(self.elapsed_time))), False, black)
+        self.screen.blit(self.player_score, (0, 0))
+
+        # flip render to the screen
         pygame.display.flip()
 
     def events(self):
         """
         part of the game loop - checks for events
         """
+
+        self.elapsed_time += self.dt
+        if self.elapsed_time >= time_limit:
+            self.quit()
+
         # adds delta time every frame to check how much time has passed since
         # a new food sprite has been spawned
         self.foodTimer += self.dt
