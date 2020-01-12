@@ -21,7 +21,7 @@ lightgrey = (100, 100, 100)
 width, height = 800, 600 # (640x480 or 800x600 or 1024x768 or 1280x1024)
 fps = 240 # fps limit
 title = 'Food Wars'
-time_limit = 120 # game time limit in seconds
+time_limit = 60 # game time limit in seconds
 
 
 # tiles
@@ -42,4 +42,4 @@ wall_image = 'mask_32x_0.png'
 
 # food settings
 food_spawn_rate = 100 # lower number = more food
-food_spawn_timer = 1.25 # seconds between food spawn
+food_spawn_timer = 1 # seconds between food spawn

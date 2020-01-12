@@ -7,7 +7,7 @@
 
 # main game script
 
-import pygame, random, sys
+import pygame, random, sys, time
 import pygame_textinput as pytxt
 from pygame.locals import *
 from settings import *
@@ -43,7 +43,7 @@ class Game:
 
         self.game_over = pygame.image.load(path.join(image_folder, 'Transparent Grey Layer.png'))
 
-    def draw_text(self, text, font_name, size, bold,color, x, y, align="nw"):
+    def draw_text(self, text, font_name, size, bold, color, x, y, align="nw"):
         font = pygame.font.SysFont(font_name, size, bold)
         text_surface = font.render(text, True, color)
         text_rect = text_surface.get_rect()
@@ -180,7 +180,7 @@ class Game:
                 self.quit()
             if event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
-                    self.quit()
+                    self.playing = False
 
     def show_start_screen(self):
         """
@@ -192,6 +192,41 @@ class Game:
         """
         shows the game over screen
         """
+        # redraws final screen wiping the scoreboard and timer
+        for sprite in self.all_sprites:
+            self.screen.blit(sprite.image, self.camera.apply(sprite))
+
+        # covers the screen in a transparent grey layer
+        self.screen.blit(self.game_over, (0,0))
+
+        # draws the game over text
+        self.draw_text('GAME OVER', 'Segoe UI', 100, True, white, width//2, height//2-100, align = 'center')
+        self.draw_text('SCORE: {}'.format(self.player.score), 'Segoe UI', 50, True, white, width//2, height//2+75, align = 'center')
+        self.draw_text('Press Escape to quit the game', 'Segoe UI', 25, True, white, width//2, height//2+150, align = 'center')
+        self.draw_text('Press any other key to play again', 'Segoe UI', 25, True, white, width//2, height//2+175, align = 'center')
+
+        # flips final screen to display
+        pygame.display.flip()
+        self.wait_for_key()
+
+    def wait_for_key(self):
+        """
+        game loop that waits at the game over screen
+        """
+        pygame.event.wait()
+        waiting = True
+        while waiting:
+            self.fpsClock.tick(fps)
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    waiting = False
+                    self.quit()
+                # if escape is pressed quit the game, otherwise start new game
+                if event.type == KEYDOWN:
+                    if event.key == K_ESCAPE:
+                        self.quit()
+                    else:
+                        waiting = False
 
 
 game = Game()
