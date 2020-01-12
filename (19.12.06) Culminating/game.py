@@ -78,7 +78,7 @@ class Game:
 
     def draw(self):
         # game loop - draw
-        pygame.display.set_caption("{} | FPS: {:.0f}".format(title, self.fpsClock.get_fps()))
+        pygame.display.set_caption("{} | FPS: {:.0f} | Score: {}".format(title, self.fpsClock.get_fps(), self.player.score))
         for sprite in self.all_sprites:
             self.screen.blit(sprite.image, self.camera.apply(sprite))
         pygame.display.flip()
