@@ -14,7 +14,6 @@ from settings import *
 from sprites import *
 from os import path
 from map import *
-from gui import *
 
 
 class Game:
@@ -41,6 +40,32 @@ class Game:
         self.floor_image = pygame.image.load(path.join(image_folder, floor_image))
         self.wall_image = pygame.image.load(path.join(image_folder, wall_image))
         self.player_image = pygame.image.load(path.join(image_folder, player_image))
+
+        self.game_over = pygame.image.load(path.join(image_folder, 'Transparent Grey Layer.png'))
+
+    def draw_text(self, text, font_name, size, bold,color, x, y, align="nw"):
+        font = pygame.font.SysFont(font_name, size, bold)
+        text_surface = font.render(text, True, color)
+        text_rect = text_surface.get_rect()
+        if align == "nw":
+            text_rect.topleft = (x, y)
+        if align == "ne":
+            text_rect.topright = (x, y)
+        if align == "sw":
+            text_rect.bottomleft = (x, y)
+        if align == "se":
+            text_rect.bottomright = (x, y)
+        if align == "n":
+            text_rect.midtop = (x, y)
+        if align == "s":
+            text_rect.midbottom = (x, y)
+        if align == "e":
+            text_rect.midright = (x, y)
+        if align == "w":
+            text_rect.midleft = (x, y)
+        if align == "center":
+            text_rect.center = (x, y)
+        self.screen.blit(text_surface, text_rect)
 
     def new(self):
         """
@@ -119,13 +144,11 @@ class Game:
         # render and blit rectangle for score and timer
         pygame.draw.rect(self.screen, lightgrey, (5, 5, 275, 50), 0)
 
-        # render and blit player score to the screen
-        self.player_score = main_font.render(' Score: {}'.format(self.player.score), False, white)
-        self.screen.blit(self.player_score, (0, 25))
+        # draws time left to the screen
+        self.draw_text(' Time Left: {} seconds'.format(time_limit-(int(self.elapsed_time))), 'Segoe UI', 25, True, white, 0, 0)
 
-        # rener and blit remaining time to the screen
-        self.player_score = main_font.render(' Time Left: {} seconds'.format(time_limit-(int(self.elapsed_time))), False, white)
-        self.screen.blit(self.player_score, (0, 0))
+        # draws player score to the screen
+        self.draw_text(' Score: {}'.format(self.player.score), 'Segoe UI', 25, True, white, 0, 25)
 
         # flip render to the screen
         pygame.display.flip()
@@ -169,7 +192,6 @@ class Game:
         """
         shows the game over screen
         """
-        pass
 
 
 game = Game()
