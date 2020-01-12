@@ -42,7 +42,9 @@ class Game:
         self.wall_image = pygame.image.load(path.join(image_folder, wall_image))
         self.player_image = pygame.image.load(path.join(image_folder, player_image))
 
+        # GUI Images
         self.game_over = pygame.image.load(path.join(image_folder, 'Transparent Grey Layer.png'))
+        self.scoreboard_backround = pygame.image.load(path.join(image_folder, 'Scoreboard Grey Layer.png'))
 
     def draw_text(self, text, font_name, size, bold, color, x, y, align="nw"):
         font = pygame.font.SysFont(font_name, size, bold)
@@ -142,8 +144,8 @@ class Game:
         for sprite in self.all_sprites:
             self.screen.blit(sprite.image, self.camera.apply(sprite))
 
-        # render and blit rectangle for score and timer
-        pygame.draw.rect(self.screen, lightgrey, (5, 5, 275, 50), 0)
+        # draws image as the scoreboard background
+        self.screen.blit(self.scoreboard_backround, (5, 5))
 
         # draws time left to the screen
         self.draw_text(' Time Left: {} seconds'.format(time_limit-(int(self.elapsed_time))), default_font, 25, True, white, 0, 0)
