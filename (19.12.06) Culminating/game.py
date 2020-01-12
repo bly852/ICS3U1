@@ -54,8 +54,6 @@ class Game:
         # initializes the camera for the player
         self.camera = Camera(self.map.width, self.map.height)
 
-        # generates the map based on a text file given
-
         # generates walls and floors
         for row, tiles in enumerate(self.map.data):
             for col, tile in enumerate(tiles):
@@ -116,6 +114,9 @@ class Game:
         for sprite in self.all_sprites:
             self.screen.blit(sprite.image, self.camera.apply(sprite))
 
+        # render and blit rectangle for score and timer
+        pygame.draw.rect(self.screen, lightgrey, (5, 5, 275, 50), 0)
+
         # render and blit player score to the screen
         self.player_score = main_font.render(' Score: {}'.format(self.player.score), False, white)
         self.screen.blit(self.player_score, (0, 25))
@@ -132,6 +133,7 @@ class Game:
         part of the game loop - checks for events
         """
 
+        #
         self.elapsed_time += self.dt
         if self.elapsed_time >= time_limit:
             self.quit()
