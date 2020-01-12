@@ -1,5 +1,5 @@
 # sprite classes
-import pygame
+import pygame, random, os
 from settings import *
 
 
@@ -128,7 +128,14 @@ class Food(pygame.sprite.Sprite):
         self.groups = game.all_sprites, game.food
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image = game.food_image
+
+        game_folder = os.path.dirname(__file__)
+        image_folder = os.path.join(game_folder, 'images')
+        food_folder = os.path.join(image_folder, 'food')
+        self.image = pygame.image.load(os.path.join(food_folder ,(random.choice([
+            x for x in os.listdir(food_folder)
+                if os.path.isfile(os.path.join(food_folder, x))]))))
+
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y

@@ -5,7 +5,7 @@
 #           name: Brandon Ly
 #    description: Two players (Mr Chun & Mr Pileggi) running around the school collecting food for the food drive.
 
-import pygame, random, sys
+import pygame, random, sys, os
 from pygame.locals import *
 from settings import *
 from sprites import *
@@ -27,7 +27,7 @@ class Game:
         map_folder = path.join(game_folder, 'maps')
         image_folder = path.join(game_folder, 'images')
         food_folder = path.join(image_folder, 'food')
-        self.food_image = pygame.image.load(path.join(food_folder, 'baconcheeseburger1.png'))
+
         self.map = Map(path.join(map_folder, 'biggerMap.txt'))
         self.floor_image = pygame.image.load(path.join(image_folder, floor_image))
         self.wall_image = pygame.image.load(path.join(image_folder, wall_image))
