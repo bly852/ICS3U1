@@ -85,9 +85,11 @@ class Game:
     def events(self):
         # game loop - events
         self.foodTimer += self.dt
-        if self.foodTimer > food_spawn_timer:
-            Food(self, random.randint(1, self.map.tileWidth-2), random.randint(1, self.map.tileHeight-2))
-            self.foodTimer = 0
+        if len(self.food) < (self.map.tileWidth*self.map.tileHeight)//food_spawn_rate:
+            if self.foodTimer > food_spawn_timer:
+                Food(self, random.randint(1, self.map.tileWidth-2), random.randint(1, self.map.tileHeight-2))
+                self.foodTimer = 0
+                print('New food spawned')
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.quit()
