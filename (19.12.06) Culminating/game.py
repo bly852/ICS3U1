@@ -5,6 +5,8 @@
 #           name: Brandon Ly
 #    description: Two players (Mr Chun & Mr Pileggi) running around the school collecting food for the food drive.
 
+# main game script
+
 import pygame, random, sys
 from pygame.locals import *
 from settings import *

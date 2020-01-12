@@ -1,5 +1,11 @@
-# game variables and settings
+#         course: ICS3U1 2019
+#       exercise: Culminating Activity
+#           date: 2019-12-06
+# student number: 340926187
+#           name: Brandon Ly
+#    description: Two players (Mr Chun & Mr Pileggi) running around the school collecting food for the food drive.
 
+# game variables and settings
 
 # colours
 blue = (66, 144, 245)
