@@ -3,7 +3,14 @@ from settings import *
 
 
 class Map:
+    """
+    class to contain the map reader
+    """
     def __init__(self, filename):
+        """
+        initializes and reads the map based of the text
+        file at the filename parameter
+        """
         self.data = []
         with open(filename, 'rt') as level:
             for line in level:
@@ -16,15 +23,28 @@ class Map:
 
 
 class Camera:
+    """
+    class to contain the games camera
+    """
     def __init__(self, cam_width, cam_height):
+        """
+        initializes a camera based on the cam_width
+        and cam_height parameters
+        """
         self.camera = pygame.Rect(0, 0, width, height)
         self.width = cam_width
         self.height = cam_height
 
     def apply(self, entity):
+        """
+        returns the camera movement to the entity parameter
+        """
         return entity.rect.move(self.camera.topleft)
 
     def update(self, target):
+        """
+        updates the camera based on the target parameter's movement
+        """
         x = -target.rect.x + int(width / 2)
         y = -target.rect.y + int(height / 2)
 

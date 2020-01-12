@@ -14,15 +14,22 @@ from map import *
 
 
 class Game:
+    """
+    Game class that contains the entire game
+    """
     def __init__(self):
-        # initialize game window
+        """
+        initialize pygame window when an instance is created
+        """
         pygame.init()
         self.screen = pygame.display.set_mode((width, height))
         self.fpsClock = pygame.time.Clock()
         self.data_loader()
 
     def data_loader(self):
-        # loads paths for all assets
+        """
+        loads paths to access game assets
+        """
         game_folder = path.dirname(__file__)
         map_folder = path.join(game_folder, 'maps')
         image_folder = path.join(game_folder, 'images')
@@ -32,20 +39,34 @@ class Game:
         self.player_image = pygame.image.load(path.join(image_folder, player_image))
 
     def new(self):
-        # new game loop
+        """
+        initializes a new game
+        """
+        # sprite groups to organize all sprites
         self.all_sprites = pygame.sprite.Group()
         self.walls = pygame.sprite.Group()
         self.floor = pygame.sprite.Group()
         self.food = pygame.sprite.Group()
+
+        # initializes the camera for the player
         self.camera = Camera(self.map.width, self.map.height)
+
+
+        # generates the map based on a text file given
+
+        # generates walls and floors
         for row, tiles in enumerate(self.map.data):
             for col, tile in enumerate(tiles):
                 if tile == 'X':
                     Wall(self, col, row)
                 else:
                     Floor(self, col, row)
+
+        # generates initial food sprites
         for x in range((self.map.tileWidth*self.map.tileHeight)//food_spawn_rate):
             Food(self, random.randint(1, self.map.tileWidth-2), random.randint(1, self.map.tileHeight-2))
+
+        # generates player sprites
         for row, tiles in enumerate(self.map.data):
             for col, tile in enumerate(tiles):
                 if tile == "1":
@@ -56,39 +77,56 @@ class Game:
                     self.player = Player(self, col, row, 2)
 
     def run(self):
-        # game loop
+        """
+        main game loop
+        """
         self.foodTimer = 0
-        self.playing = True
-        while self.playing:
+        while True:
             self.dt = self.fpsClock.tick(fps) / 1000
             self.events()
             self.update()
             self.draw()
 
     def quit(self):
+        """
+        quits pygame and closes the window
+        """
         print("You got a score of {}!".format(self.player.score))
         pygame.quit()
         sys.exit()
 
     def update(self):
-        # game loop - update
+        """
+        part of the game loop - updates sprites
+        """
         self.all_sprites.update()
         self.camera.update(self.player)
 
     def draw(self):
-        # game loop - draw
+        """
+        part of the game loop - draws the new sprite positions to the screen
+        """
         pygame.display.set_caption("{} | FPS: {:.0f} | Score: {}".format(title, self.fpsClock.get_fps(), self.player.score))
         for sprite in self.all_sprites:
             self.screen.blit(sprite.image, self.camera.apply(sprite))
         pygame.display.flip()
 
     def events(self):
-        # game loop - events
+        """
+        part of the game loop - checks for events
+        """
+        # adds delta time every frame to check how much time has passed since
+        # a new food sprite has been spawned
         self.foodTimer += self.dt
+
+        # generates new food sprites based on timer if the amount of food sprites
+        # is less than amount of initial food sprites
         if len(self.food) < (self.map.tileWidth*self.map.tileHeight)//food_spawn_rate:
             if self.foodTimer > food_spawn_timer:
                 Food(self, random.randint(1, self.map.tileWidth-2), random.randint(1, self.map.tileHeight-2))
                 self.foodTimer = 0
+
+        # checks for events to exit the game
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.quit()
@@ -97,11 +135,15 @@ class Game:
                     self.quit()
 
     def show_start_screen(self):
-        # game start screen
+        """
+        shows the games start screen
+        """
         pass
 
     def show_game_over(self):
-        # game over screen
+        """
+        shows the game over screen
+        """
         pass
 
 
