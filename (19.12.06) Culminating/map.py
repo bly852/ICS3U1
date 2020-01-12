@@ -3,7 +3,8 @@
 #           date: 2019-12-06
 # student number: 340926187
 #           name: Brandon Ly
-#    description: Two players (Mr Chun & Mr Pileggi) running around the school collecting food for the food drive.
+#    description: Two players (Mr Chun & Mr Pileggi) running around the school
+#                 collecting food for the food drive.
 
 # map and camera classes
 
