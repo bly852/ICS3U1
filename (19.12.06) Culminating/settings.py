@@ -37,7 +37,8 @@ player_speed = 500
 
 # images
 player_image = 'hitman1_hold.png'
-floor_image = 'marble_floor32x32.png'
+floor_image = 'brick_floor32x32.png'
+abyss_image = 'black_background32x32.png'
 wall_image = 'mask_32x_0.png'
 
 

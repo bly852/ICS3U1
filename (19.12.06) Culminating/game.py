@@ -41,6 +41,7 @@ class Game:
         self.floor_image = pygame.image.load(path.join(image_folder, floor_image))
         self.wall_image = pygame.image.load(path.join(image_folder, wall_image))
         self.player_image = pygame.image.load(path.join(image_folder, player_image))
+        self.abyss_image = pygame.image.load(path.join(image_folder, abyss_image))
 
         # GUI Images
         self.game_over = pygame.image.load(path.join(image_folder, 'Transparent Grey Layer.png'))
@@ -81,6 +82,7 @@ class Game:
         # sprite groups to organize all sprites
         self.all_sprites = pygame.sprite.Group()
         self.walls = pygame.sprite.Group()
+        self.abyss = pygame.sprite.Group()
         self.floor = pygame.sprite.Group()
         self.food = pygame.sprite.Group()
 
@@ -92,8 +94,10 @@ class Game:
             for col, tile in enumerate(tiles):
                 if tile == 'X':
                     Wall(self, col, row)
-                else:
+                elif tile =='.':
                     Floor(self, col, row)
+                else:
+                    Abyss(self, col, row)
 
         # generates initial food sprites
         for x in range((self.map.tileWidth*self.map.tileHeight)//food_spawn_rate):
