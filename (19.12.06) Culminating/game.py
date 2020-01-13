@@ -46,8 +46,8 @@ class Game:
         self.game_over = pygame.image.load(path.join(image_folder, 'Transparent Grey Layer.png'))
         self.scoreboard_backround = pygame.image.load(path.join(image_folder, 'Scoreboard Grey Layer.png'))
 
-    def draw_text(self, text, font_name, size, bold, color, x, y, align="nw"):
-        font = pygame.font.SysFont(font_name, size, bold)
+    def draw_text(self, text, font_name, size, color, x, y, align="nw"):
+        font = pygame.font.Font(font_name, size)
         text_surface = font.render(text, True, color)
         text_rect = text_surface.get_rect()
         if align == "nw":
@@ -148,10 +148,10 @@ class Game:
         self.screen.blit(self.scoreboard_backround, (5, 5))
 
         # draws time left to the screen
-        self.draw_text(' Time Left: {} seconds'.format(time_limit-(int(self.elapsed_time))), default_font, 25, True, white, 0, 0)
+        self.draw_text(' Time Left: {} seconds'.format(time_limit-(int(self.elapsed_time))), default_font_bold, 25, white, 0, 0)
 
         # draws player score to the screen
-        self.draw_text(' Score: {}'.format(self.player.score), default_font, 25, True, white, 0, 25)
+        self.draw_text(' Score: {}'.format(self.player.score), default_font_bold, 25, white, 0, 25)
 
         # flip render to the screen
         pygame.display.flip()
@@ -193,10 +193,10 @@ class Game:
         self.screen.fill(black)
 
         # draws splash screen text
-        self.draw_text('FOOD WARS', default_font, 100, True, white, width//2, height//2-100, align = 'center')
-        self.draw_text('WASD to move', default_font, 25, True, white, width//2, height//2+25, align = 'center')
-        self.draw_text('Pickup food to get points', default_font, 25, True, white, width//2, height//2+50, align = 'center')
-        self.draw_text('Press any key to start', default_font, 50, True, white, width//2, height//2+175, align = 'center')
+        self.draw_text('FOOD WARS', default_font_bold, 100, white, width//2, height//2-100, align = 'center')
+        self.draw_text('WASD to move', default_font_bold, 25, white, width//2, height//2+25, align = 'center')
+        self.draw_text('Pickup food to get points', default_font_bold, 25, white, width//2, height//2+50, align = 'center')
+        self.draw_text('Press any key to start', default_font_bold, 50, white, width//2, height//2+175, align = 'center')
 
         # flips final screen to display
         pygame.display.flip()
@@ -214,10 +214,10 @@ class Game:
         self.screen.blit(self.game_over, (0,0))
 
         # draws the game over text
-        self.draw_text('GAME OVER', default_font, 100, True, white, width//2, height//2-100, align = 'center')
-        self.draw_text('SCORE: {}'.format(self.player.score), default_font, 50, True, white, width//2, height//2+75, align = 'center')
-        self.draw_text('Press Escape to quit the game', default_font, 25, True, white, width//2, height//2+150, align = 'center')
-        self.draw_text('Press any other key to play again', default_font, 25, True, white, width//2, height//2+175, align = 'center')
+        self.draw_text('GAME OVER', default_font_bold, 100, white, width//2, height//2-100, align = 'center')
+        self.draw_text('SCORE: {}'.format(self.player.score), default_font_bold, 50, white, width//2, height//2+75, align = 'center')
+        self.draw_text('Press Escape to quit the game', default_font_bold, 25, white, width//2, height//2+150, align = 'center')
+        self.draw_text('Press any other key to play again', default_font_bold, 25, white, width//2, height//2+175, align = 'center')
 
         # flips final screen to display
         pygame.display.flip()
