@@ -37,7 +37,7 @@ class Game:
         game_folder = path.dirname(__file__)
         map_folder = path.join(game_folder, 'maps')
         image_folder = path.join(game_folder, 'images')
-        self.map = Map(path.join(map_folder, 'biggerMap.txt'))
+        self.map = Map(path.join(map_folder, 'tdss.txt'))
         self.floor_image = pygame.image.load(path.join(image_folder, floor_image))
         self.wall_image = pygame.image.load(path.join(image_folder, wall_image))
         self.player_image = pygame.image.load(path.join(image_folder, player_image))
