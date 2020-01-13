@@ -46,11 +46,15 @@ class Game:
         self.game_over = pygame.image.load(path.join(image_folder, 'Transparent Grey Layer.png'))
         self.scoreboard_backround = pygame.image.load(path.join(image_folder, 'Scoreboard Grey Layer.png'))
 
-    def draw_text(self, text, font_name, size, color, x, y, align="nw"):
+    def draw_text(self, text, font_name, size, colour, x, y, align="topleft"):
+        """
+        renders and blits the text with a specified font, size, colour, x and
+        y coordinate, and alignment in the rectangle
+        """
         font = pygame.font.Font(font_name, size)
-        text_surface = font.render(text, True, color)
+        text_surface = font.render(text, True, colour)
         text_rect = text_surface.get_rect()
-        if align == "nw":
+        if align == "topleft":
             text_rect.topleft = (x, y)
         if align == "ne":
             text_rect.topright = (x, y)
