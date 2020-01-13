@@ -42,8 +42,8 @@ wall_image = 'mask_32x_0.png'
 
 
 # food settings
-food_spawn_rate = 100 # lower number = more food
-food_spawn_timer = 1 # seconds between food spawn
+food_spawn_rate = 50 # lower number = more food
+food_spawn_timer = 0.25 # seconds between food spawn
 
 
 # text settings
