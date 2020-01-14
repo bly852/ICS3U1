@@ -16,21 +16,25 @@ class Player(pygame.sprite.Sprite):
     """
     player class that contains all data and functions related to the player
     """
-    def __init__(self, game, x, y, player_num):
+    def __init__(self, game, x, y, playerNum):
         """
         initalizes a player sprite when an instance is created in the game
         parameter,at the x and y paramters, and player num
         """
-        self.groups = game.all_sprites
+        self.playerNum = playerNum
+        self.groups = game.all_sprites, game.players
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image = game.player_image
-        self.image = pygame.transform.rotate(self.game.player_image, 90)
+
+        if self.playerNum == 1:
+            self.image = pygame.transform.rotate(self.game.player1_image, 90)
+        else:
+            self.image = pygame.transform.rotate(self.game.player2_image, 90)
         self.rect = self.image.get_rect()
         self.velX, self.velY = 0, 0
         self.x = x * tileSize - tileSize
         self.y = y * tileSize - tileSize
-        self.playerNum = player_num
+
         self.score = 0
 
     def get_keys(self):
@@ -63,25 +67,46 @@ class Player(pygame.sprite.Sprite):
         rotates the player sprite based on the current direction and new
         direction
         """
-        if self.velX > 0:
-            if self.velY < 0:
-                self.image = pygame.transform.rotate(self.game.player_image, 45)
-            elif self.velY > 0:
-                self.image = pygame.transform.rotate(self.game.player_image, -45)
+        if self.playerNum == 1:
+            if self.velX > 0:
+                if self.velY < 0:
+                    self.image = pygame.transform.rotate(self.game.player1_image, 45)
+                elif self.velY > 0:
+                    self.image = pygame.transform.rotate(self.game.player1_image, -45)
+                else:
+                    self.image = pygame.transform.rotate(self.game.player1_image, 0)
+            elif self.velX < 0:
+                if self.velY < 0:
+                    self.image = pygame.transform.rotate(self.game.player1_image, 135)
+                elif self.velY > 0:
+                    self.image = pygame.transform.rotate(self.game.player1_image, -135)
+                else:
+                    self.image = pygame.transform.rotate(self.game.player1_image, 180)
             else:
-                self.image = pygame.transform.rotate(self.game.player_image, 0)
-        elif self.velX < 0:
-            if self.velY < 0:
-                self.image = pygame.transform.rotate(self.game.player_image, 135)
-            elif self.velY > 0:
-                self.image = pygame.transform.rotate(self.game.player_image, -135)
-            else:
-                self.image = pygame.transform.rotate(self.game.player_image, 180)
+                if self.velY < 0:
+                    self.image = pygame.transform.rotate(self.game.player1_image, 90)
+                elif self.velY > 0:
+                    self.image = pygame.transform.rotate(self.game.player1_image, -90)
         else:
-            if self.velY < 0:
-                self.image = pygame.transform.rotate(self.game.player_image, 90)
-            elif self.velY > 0:
-                self.image = pygame.transform.rotate(self.game.player_image, -90)
+            if self.velX > 0:
+                if self.velY < 0:
+                    self.image = pygame.transform.rotate(self.game.player2_image, 45)
+                elif self.velY > 0:
+                    self.image = pygame.transform.rotate(self.game.player2_image, -45)
+                else:
+                    self.image = pygame.transform.rotate(self.game.player2_image, 0)
+            elif self.velX < 0:
+                if self.velY < 0:
+                    self.image = pygame.transform.rotate(self.game.player2_image, 135)
+                elif self.velY > 0:
+                    self.image = pygame.transform.rotate(self.game.player2_image, -135)
+                else:
+                    self.image = pygame.transform.rotate(self.game.player2_image, 180)
+            else:
+                if self.velY < 0:
+                    self.image = pygame.transform.rotate(self.game.player2_image, 90)
+                elif self.velY > 0:
+                    self.image = pygame.transform.rotate(self.game.player2_image, -90)
 
     def wall_collision(self, axis):
         """

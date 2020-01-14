@@ -36,7 +36,7 @@ class Camera:
     """
     class to contain the games camera
     """
-    def __init__(self, cam_width, cam_height):
+    def __init__(self, cam_width, cam_height, camNum):
         """
         initializes a camera based on the cam_width
         and cam_height parameters

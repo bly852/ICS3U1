@@ -40,7 +40,8 @@ class Game:
         self.map = Map(path.join(map_folder, 'tdss.txt'))
         self.floor_image = pygame.image.load(path.join(image_folder, floor_image)).convert_alpha()
         self.wall_image = pygame.image.load(path.join(image_folder, wall_image)).convert_alpha()
-        self.player_image = pygame.image.load(path.join(image_folder, player_image)).convert_alpha()
+        self.player1_image = pygame.image.load(path.join(image_folder, player1_image)).convert_alpha()
+        self.player2_image = pygame.image.load(path.join(image_folder, player2_image)).convert_alpha()
         self.abyss_image = pygame.image.load(path.join(image_folder, abyss_image)).convert_alpha()
 
         # GUI Images
@@ -79,15 +80,17 @@ class Game:
         """
         initializes a new game
         """
+        self.splashscreen = False
         # sprite groups to organize all sprites
         self.all_sprites = pygame.sprite.Group()
+        self.players = pygame.sprite.Group()
         self.walls = pygame.sprite.Group()
         self.abyss = pygame.sprite.Group()
         self.floor = pygame.sprite.Group()
         self.food = pygame.sprite.Group()
 
         # initializes the camera for the player
-        self.camera = Camera(self.map.width, self.map.height)
+        self.camera1 = Camera(self.map.width, self.map.height, 1)
 
         # generates walls and floors
         for row, tiles in enumerate(self.map.data):
@@ -108,10 +111,10 @@ class Game:
             for col, tile in enumerate(tiles):
                 if tile == "1":
                     Floor(self, col, row)
-                    self.player = Player(self, col, row, 1)
+                    self.player1 = Player(self, col, row, 1)
                 elif tile == "2":
                     Floor(self, col, row)
-                    self.player = Player(self, col, row, 2)
+                    self.player2 = Player(self, col, row, 2)
 
     def run(self):
         """
@@ -130,7 +133,6 @@ class Game:
         """
         quits pygame and closes the window
         """
-        print("You got a score of {}!".format(self.player.score))
         pygame.quit()
         sys.exit()
 
@@ -139,18 +141,18 @@ class Game:
         part of the game loop - updates sprites
         """
         self.all_sprites.update()
-        self.camera.update(self.player)
+        self.camera1.update(self.player1)
 
     def draw(self):
         """
         part of the game loop - draws the new sprite positions and text to the
         screen
         """
-        pygame.display.set_caption("{} | FPS: {:.0f} | Score: {}".format(title, self.fpsClock.get_fps(), self.player.score))
+        pygame.display.set_caption("{} | FPS: {:.0f} | Score: {}".format(title, self.fpsClock.get_fps(), self.player1.score))
 
         # blit all sprites to the screen
         for sprite in self.all_sprites:
-            self.screen.blit(sprite.image, self.camera.apply(sprite))
+            self.screen.blit(sprite.image, self.camera1.apply(sprite))
 
         # draws image as the scoreboard background
         self.screen.blit(self.scoreboard_backround, (5, 5))
@@ -159,7 +161,7 @@ class Game:
         self.draw_text(' Time Left: {} seconds'.format(time_limit-(int(self.elapsed_time))), default_font_bold, 25, white, 0, 0)
 
         # draws player score to the screen
-        self.draw_text(' Score: {}'.format(self.player.score), default_font_bold, 25, white, 0, 25)
+        self.draw_text(' Score: {}'.format(self.player1.score), default_font_bold, 25, white, 0, 25)
 
         # flip render to the screen
         pygame.display.flip()
@@ -206,6 +208,7 @@ class Game:
         self.draw_text('Pickup food to get points', default_font_bold, 25, white, width//2, height//2+50, align = 'center')
         self.draw_text('Press any key to start', default_font_bold, 50, white, width//2, height//2+175, align = 'center')
 
+        self.splashscreen = True
         # flips final screen to display
         pygame.display.flip()
         self.wait_for_key()
@@ -216,14 +219,14 @@ class Game:
         """
         # redraws final screen wiping the scoreboard and timer
         for sprite in self.all_sprites:
-            self.screen.blit(sprite.image, self.camera.apply(sprite))
+            self.screen.blit(sprite.image, self.camera1.apply(sprite))
 
         # covers the screen in a transparent grey layer
         self.screen.blit(self.game_over, (0,0))
 
         # draws the game over text
         self.draw_text('GAME OVER', default_font_bold, 100, white, width//2, height//2-100, align = 'center')
-        self.draw_text('SCORE: {}'.format(self.player.score), default_font_bold, 50, white, width//2, height//2+75, align = 'center')
+        self.draw_text('SCORE: {}'.format(self.player1.score), default_font_bold, 50, white, width//2, height//2+75, align = 'center')
         self.draw_text('Press Escape to quit the game', default_font_bold, 25, white, width//2, height//2+150, align = 'center')
         self.draw_text('Press any other key to play again', default_font_bold, 25, white, width//2, height//2+175, align = 'center')
 
@@ -245,14 +248,13 @@ class Game:
                     self.quit()
                 # if escape is pressed quit the game, otherwise start new game
                 if event.type == KEYDOWN:
-                    try:
+                    if self.splashscreen == True:
+                        waiting = False
+                    else:
                         if event.key == K_ESCAPE:
                             self.quit()
                         else:
                             waiting = False
-                    except AttributeError:
-                        waiting = False
-
 
 game = Game()
 game.show_start_screen()
