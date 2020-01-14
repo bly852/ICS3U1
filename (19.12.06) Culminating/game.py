@@ -38,14 +38,14 @@ class Game:
         map_folder = path.join(game_folder, 'maps')
         image_folder = path.join(game_folder, 'images')
         self.map = Map(path.join(map_folder, 'tdss.txt'))
-        self.floor_image = pygame.image.load(path.join(image_folder, floor_image))
-        self.wall_image = pygame.image.load(path.join(image_folder, wall_image))
-        self.player_image = pygame.image.load(path.join(image_folder, player_image))
-        self.abyss_image = pygame.image.load(path.join(image_folder, abyss_image))
+        self.floor_image = pygame.image.load(path.join(image_folder, floor_image)).convert_alpha()
+        self.wall_image = pygame.image.load(path.join(image_folder, wall_image)).convert_alpha()
+        self.player_image = pygame.image.load(path.join(image_folder, player_image)).convert_alpha()
+        self.abyss_image = pygame.image.load(path.join(image_folder, abyss_image)).convert_alpha()
 
         # GUI Images
-        self.game_over = pygame.image.load(path.join(image_folder, 'Transparent Grey Layer.png'))
-        self.scoreboard_backround = pygame.image.load(path.join(image_folder, 'Scoreboard Grey Layer.png'))
+        self.game_over = pygame.image.load(path.join(image_folder, 'Transparent Grey Layer.png')).convert_alpha()
+        self.scoreboard_backround = pygame.image.load(path.join(image_folder, 'Scoreboard Grey Layer.png')).convert_alpha()
 
     def draw_text(self, text, font_name, size, colour, x, y, align="topleft"):
         """
