@@ -238,7 +238,7 @@ class Game:
         """
         game loop that waits at the game over screen
         """
-        pygame.event.wait()
+        pygame.event.clear()
         waiting = True
         while waiting:
             self.fpsClock.tick(fps)
