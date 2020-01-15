@@ -174,49 +174,6 @@ class Wall(pygame.sprite.Sprite):
         self.rect.x = x * tileSize
         self.rect.y = y * tileSize
 
-    def food_collision(self):
-        """
-        kills the food sprite if it collides with a wall sprite
-        """
-        collides = pygame.sprite.spritecollide(self, self.game.food, True)
-
-    def update(self):
-        """
-        updates the wall sprite every frame
-        """
-        self.food_collision()
-
-class Abyss(pygame.sprite.Sprite):
-    """
-    class to contain all the data for Abyss sprites
-    """
-    def __init__(self, game, x, y):
-        """
-        initalizes an abyss sprite when an instance is created in the game
-        parameter, at the x and y paramters
-        """
-        self.groups = game.all_sprites, game.floor
-        pygame.sprite.Sprite.__init__(self, self.groups)
-        self.game = game
-        self.image = game.abyss_image
-        self.rect = self.image.get_rect()
-        self.x = x
-        self.y = y
-        self.rect.x = x * tileSize
-        self.rect.y = y * tileSize
-
-    def food_collision(self):
-        """
-        kills the food sprite if it collides with an abyss sprite
-        """
-        collides = pygame.sprite.spritecollide(self, self.game.food, True)
-
-    def update(self):
-        """
-        updates the abyss sprite every frame
-        """
-        self.food_collision()
-
 
 class Floor(pygame.sprite.Sprite):
     """
@@ -227,7 +184,7 @@ class Floor(pygame.sprite.Sprite):
         initalizes a floor sprite when an instance is created in the game
         parameter, at the x and y paramters
         """
-        self.groups = game.all_sprites, game.abyss
+        self.groups = game.all_sprites, game.floor
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.game = game
         self.image = game.floor_image
@@ -236,8 +193,6 @@ class Floor(pygame.sprite.Sprite):
         self.y = y
         self.rect.x = x * tileSize
         self.rect.y = y * tileSize
-
-
 
 
 class Food(pygame.sprite.Sprite):
@@ -266,3 +221,15 @@ class Food(pygame.sprite.Sprite):
         self.y = y
         self.rect.x = x * tileSize
         self.rect.y = y * tileSize
+        self.spawnable = False
+
+    def spawn_check(self):
+        collided = pygame.sprite.spritecollide(self, self.game.floor, False)
+        for sprite in collided:
+            if self.x == sprite.x and self.y == sprite.y:
+                self.spawnable = True
+
+    def update(self):
+        self.spawn_check()
+        if self.spawnable == False:
+            self.kill()

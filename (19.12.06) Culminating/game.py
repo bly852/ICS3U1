@@ -42,8 +42,6 @@ class Game:
         self.wall_image = pygame.image.load(path.join(image_folder, wall_image)).convert_alpha()
         self.player1_image = pygame.image.load(path.join(image_folder, player1_image)).convert_alpha()
         self.player2_image = pygame.image.load(path.join(image_folder, player2_image)).convert_alpha()
-        self.abyss_image = pygame.image.load(path.join(image_folder, abyss_image)).convert_alpha()
-
         # GUI Images
         self.game_over = pygame.image.load(path.join(image_folder, 'Transparent Grey Layer.png')).convert_alpha()
         self.scoreboard_backround = pygame.image.load(path.join(image_folder, 'Scoreboard Grey Layer.png')).convert_alpha()
@@ -85,7 +83,6 @@ class Game:
         self.all_sprites = pygame.sprite.Group()
         self.players = pygame.sprite.Group()
         self.walls = pygame.sprite.Group()
-        self.abyss = pygame.sprite.Group()
         self.floor = pygame.sprite.Group()
         self.food = pygame.sprite.Group()
 
@@ -99,8 +96,6 @@ class Game:
                     Wall(self, col, row)
                 elif tile =='.':
                     Floor(self, col, row)
-                else:
-                    Abyss(self, col, row)
 
         # generates initial food sprites
         for x in range((self.map.tileWidth*self.map.tileHeight)//food_spawn_rate):
@@ -149,6 +144,9 @@ class Game:
         screen
         """
         pygame.display.set_caption("{} | FPS: {:.0f} | Score: {}".format(title, self.fpsClock.get_fps(), self.player1.score))
+
+        # wipes the screen
+        self.screen.fill(black)
 
         # blit all sprites to the screen
         for sprite in self.all_sprites:
