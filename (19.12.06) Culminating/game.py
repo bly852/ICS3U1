@@ -143,7 +143,7 @@ class Game:
         part of the game loop - draws the new sprite positions and text to the
         screen
         """
-        pygame.display.set_caption("{} | FPS: {:.0f} | Score: {}".format(title, self.fpsClock.get_fps(), self.player1.score))
+        pygame.display.set_caption("{} | FPS: {:.0f} | Player 1 Score: {} | Player 2 Score: {}".format(title, self.fpsClock.get_fps(), self.player1.score, self.player2.score))
 
         # wipes the screen
         self.screen.fill(black)

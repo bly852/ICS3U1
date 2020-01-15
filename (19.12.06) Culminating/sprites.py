@@ -132,6 +132,47 @@ class Player(pygame.sprite.Sprite):
                 self.velY = 0
                 self.rect.y = self.y
 
+    def player_collision(self, axis):
+        """
+        checks for player collision with the all wall sprites on the axis
+        given and prevents player movement onto it
+        """
+        if self.playerNum == 1:
+            if axis == 'x':
+                if self.rect.colliderect(self.game.player2):
+                    if self.velX > 0:
+                        self.x = self.game.player2.rect.left - self.rect.width
+                    if self.velX < 0:
+                        self.x = self.game.player2.rect.right
+                    self.velX = 0
+                    self.rect.x = self.x
+            if axis == 'y':
+                if self.rect.colliderect(self.game.player2):
+                    if self.velY > 0:
+                        self.y = self.game.player2.rect.top - self.rect.height
+                    if self.velY < 0:
+                        self.y = self.game.player2.rect.bottom
+                    self.velY = 0
+                    self.rect.y = self.y
+
+        else:
+            if axis == 'x':
+                if self.rect.colliderect(self.game.player1):
+                    if self.velX > 0:
+                        self.x = self.game.player1.rect.left - self.rect.width
+                    if self.velX < 0:
+                        self.x = self.game.player1.rect.right
+                    self.velX = 0
+                    self.rect.x = self.x
+            if axis == 'y':
+                if self.rect.colliderect(self.game.player1):
+                    if self.velY > 0:
+                        self.y = self.game.player1.rect.top - self.rect.height
+                    if self.velY < 0:
+                        self.y = self.game.player1.rect.bottom
+                    self.velY = 0
+                    self.rect.y = self.y
+
     def food_collision(self):
         """
         checks for player collision with all food sprites killing any sprites it comes collides with and adding 1 to the players score value
@@ -150,8 +191,10 @@ class Player(pygame.sprite.Sprite):
         self.y += self.velY * self.game.dt
         self.rect.x = self.x
         self.wall_collision('x')
+        self.player_collision('x')
         self.rect.y = self.y
         self.wall_collision('y')
+        self.player_collision('y')
         self.food_collision()
 
 
