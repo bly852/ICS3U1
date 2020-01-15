@@ -221,15 +221,12 @@ class Food(pygame.sprite.Sprite):
         self.y = y
         self.rect.x = x * tileSize
         self.rect.y = y * tileSize
-        self.spawnable = False
 
-    def spawn_check(self):
+        # checks if the sprite is allowed to spawn in the x and y
+        self.spawnable = False
         collided = pygame.sprite.spritecollide(self, self.game.floor, False)
         for sprite in collided:
             if self.x == sprite.x and self.y == sprite.y:
                 self.spawnable = True
-
-    def update(self):
-        self.spawn_check()
         if self.spawnable == False:
             self.kill()
