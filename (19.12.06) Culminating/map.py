@@ -55,7 +55,7 @@ class Camera:
         """
         updates the camera based on the target parameter's movement
         """
-        x = -target.rect.x + int(width / 2)
+        x = -target.rect.x + int(width / 4)
         y = -target.rect.y + int(height / 2)
 
         # camera limits

@@ -27,6 +27,11 @@ class Game:
         """
         pygame.init()
         self.screen = pygame.display.set_mode((width, height))
+        self.canvas = pygame.Surface((width, height))
+        self.player1_rect = pygame.Rect(0, 0, width, height)
+        self.player2_rect = pygame.Rect(width/2, 0, width/2, height)
+        self.player1_cam = self.canvas.subsurface(self.player1_rect)
+        self.player2_cam = self.canvas.subsurface(self.player2_rect)
         self.fpsClock = pygame.time.Clock()
         self.data_loader()
 
@@ -88,6 +93,7 @@ class Game:
 
         # initializes the camera for the player
         self.camera1 = Camera(self.map.width, self.map.height, 1)
+        self.camera2 = Camera(self.map.width, self.map.height, 2)
 
         # generates walls and floors
         for row, tiles in enumerate(self.map.data):
@@ -137,6 +143,7 @@ class Game:
         """
         self.all_sprites.update()
         self.camera1.update(self.player1)
+        self.camera2.update(self.player2)
 
     def draw(self):
         """
@@ -148,18 +155,26 @@ class Game:
         # wipes the screen
         self.screen.fill(black)
 
-        # blit all sprites to the screen
+        # blit all sprites to each players camera
         for sprite in self.all_sprites:
-            self.screen.blit(sprite.image, self.camera1.apply(sprite))
+            self.player1_cam.blit(sprite.image, self.camera1.apply(sprite))
+        for sprite in self.all_sprites:
+            self.player2_cam.blit(sprite.image, self.camera2.apply(sprite))
 
-        # draws image as the scoreboard background
-        self.screen.blit(self.scoreboard_backround, (5, 5))
+        # blits both players views onto the main screen
+        self.screen.blit(self.player1_cam, (0, 0))
+        self.screen.blit(self.player2_cam, (width/2, 0))
+
+        # blits the GUI background
+        self.screen.blit(self.scoreboard_backround, ((width/4)-(width/16)+5, 0))
+        pygame.draw.line(self.screen, black, (400, 0), (400, 600), 10)
 
         # draws time left to the screen
-        self.draw_text(' Time Left: {} seconds'.format(time_limit-(int(self.elapsed_time))), default_font_bold, 25, white, 0, 0)
+        self.draw_text(' Time Left: {} seconds'.format(time_limit-(int(self.elapsed_time))), default_font_bold, 25, white, width/2, 15, align = 'center')
 
         # draws player score to the screen
-        self.draw_text(' Score: {}'.format(self.player1.score), default_font_bold, 25, white, 0, 25)
+        self.draw_text(' Score: {}'.format(self.player1.score), default_font_bold, 25, white, width/4, 15, align = 'center')
+        self.draw_text(' Score: {}'.format(self.player2.score), default_font_bold, 25, white, width-(width/4), 15, align = 'center')
 
         # flip render to the screen
         pygame.display.flip()
