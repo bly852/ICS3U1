@@ -8,7 +8,7 @@ AAAAX.....X.....X.....X.....XAAAX.....X.....X.....X.....X.....X.....XAAAAAAXAAAA
 XXXXX..XXXXXXX..X..XXXX..XXXXXXXXXXX..XXXX..XXXX..XXXX..XXXX..XXXX..XXXXXXXXXXXXXXXAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 X.................................................................................XAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 X....................2............................................................XAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-X...............1.................................................................XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X................1................................................................XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 X.............................................................................................................X
 X.............................................................................................................X
 XXXXXXX..XXXXXXX..X..XXXXXXXXXXXX.....XXXXXXXXX..XX..XXXXXXXXXXXXXXXXXXXXXX...................................X
