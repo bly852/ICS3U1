@@ -153,8 +153,8 @@ class Game:
         pygame.display.set_caption("{} | FPS: {:.0f} | Player 1 Score: {} | Player 2 Score: {}".format(title, self.fpsClock.get_fps(), self.player1.score, self.player2.score))
 
         # wipes the screen
-        self.player1_cam.fill(black)
-        self.player2_cam.fill(black)
+        self.player1_cam.fill(lightgrey)
+        self.player2_cam.fill(lightgrey)
 
         # blit all sprites to each players camera
         for sprite in self.all_sprites:
@@ -232,32 +232,10 @@ class Game:
         """
         shows the game over screen
         """
-        # wipes the screens
-        self.player1_cam.fill(black)
-        self.player2_cam.fill(black)
+        # draws the final screen
+        self.draw()
 
-        # blit all sprites to each players camera
-        for sprite in self.all_sprites:
-            self.player1_cam.blit(sprite.image, self.camera1.apply(sprite))
-        for sprite in self.all_sprites:
-            self.player2_cam.blit(sprite.image, self.camera2.apply(sprite))
-
-        # blits both players views onto the main screen
-        self.screen.blit(self.player1_cam, (0, 0))
-        self.screen.blit(self.player2_cam, (width/2, 0))
-
-        # blits the GUI background
-        self.screen.blit(self.scoreboard_backround, ((width/4)-(width/16), 0))
-        pygame.draw.line(self.screen, black, (400, 0), (400, 600), 10)
-
-        # draws time left to the screen
-        self.draw_text('{} seconds left'.format(time_limit-(int(self.elapsed_time))), default_font_bold, 25, white, width/2, 15, align = 'center')
-
-        # draws player score to the screen
-        self.draw_text('Score: {}'.format(self.player1.score), default_font_bold, 25, white, width/4, 15, align = 'center')
-        self.draw_text('Score: {}'.format(self.player2.score), default_font_bold, 25, white, width-(width/4), 15, align = 'center')
-
-        # covers the screen in a transparent grey layer
+        # covers the final screen in a transparent grey layer
         self.screen.blit(self.game_over, (0,0))
 
         # draws the game over text
