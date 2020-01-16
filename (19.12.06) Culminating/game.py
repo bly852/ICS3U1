@@ -217,8 +217,9 @@ class Game:
 
         # draws splash screen text
         self.draw_text('FOOD WARS', default_font_bold, 100, white, width//2, height//2-100, align = 'center')
-        self.draw_text('WASD to move', default_font_bold, 25, white, width//2, height//2+25, align = 'center')
-        self.draw_text('Pickup food to get points', default_font_bold, 25, white, width//2, height//2+50, align = 'center')
+        self.draw_text('WASD to move Mr. Pileggi (Player 1)', default_font_bold, 25, white, width//2, height//2+25, align = 'center')
+        self.draw_text('Arrow Keys to move Mr. Chun (Player 2)', default_font_bold, 25, white, width//2, height//2+50, align = 'center')
+        self.draw_text('Pickup food to get points', default_font_bold, 25, white, width//2, height//2+100, align = 'center')
         self.draw_text('Press any key to start', default_font_bold, 50, white, width//2, height//2+175, align = 'center')
 
         self.splashscreen = True
