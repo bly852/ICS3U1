@@ -168,7 +168,7 @@ class Game:
 
         # blits the GUI background
         self.screen.blit(self.scoreboard_backround, ((width/4)-(width/16), 0))
-        pygame.draw.line(self.screen, white, (400, 0), (400, 600), 10)
+        pygame.draw.line(self.screen, black, (400, 0), (400, 600), 10)
 
         # draws time left to the screen
         self.draw_text('{} seconds left'.format(time_limit-(int(self.elapsed_time))), default_font_bold, 25, white, width/2, 15, align = 'center')
