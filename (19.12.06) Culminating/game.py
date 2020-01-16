@@ -165,6 +165,7 @@ class Game:
         part of the game loop - draws the new sprite positions and text to the
         screen
         """
+        # updates window caption with current FPS
         pygame.display.set_caption("{} | FPS: {:.0f}".format(title, self.fpsClock.get_fps()))
 
         # wipes both cameras and fills with light grey
@@ -181,16 +182,22 @@ class Game:
         self.screen.blit(self.player1_cam, (0, 0))
         self.screen.blit(self.player2_cam, (width/2, 0))
 
-        # blits the GUI background
-        self.screen.blit(self.scoreboard_backround, ((width/4)-(width/16), 0))
-        pygame.draw.line(self.screen, black, (400, 0), (400, 600), 10)
+        # draws the screen border
+        pygame.draw.rect(self.screen, gui_accent_colour, (0, 0, width, height), 3)
+
+        # draws the GUI background
+        pygame.draw.line(self.screen, gui_accent_colour, (width/2, 0), (width/2, height), 14)
+        pygame.draw.rect(self.screen, gui_accent_colour, ((width/4)-(width/12)-2, 0, width-(width/4)-(width/12)+4, 37))
+        pygame.draw.line(self.screen, black, (width/2, 2), (width/2, height), 10)
+        pygame.draw.rect(self.screen, black, ((width/4)-(width/12), 2, width-(width/4)-(width/12), 33))
+
 
         # draws time left to the screen
-        self.draw_text('{} seconds left'.format(time_limit-(int(self.elapsed_time))), default_font_bold, 25, white, width/2, 15, align = 'center')
+        self.draw_text('{} seconds left'.format(time_limit-(int(self.elapsed_time))), default_font_bold, 25, white, width/2, 17, align = 'center')
 
         # draws player score to the screen
-        self.draw_text('Score: {}'.format(self.player1.score), default_font_bold, 25, white, width/4, 15, align = 'center')
-        self.draw_text('Score: {}'.format(self.player2.score), default_font_bold, 25, white, width-(width/4), 15, align = 'center')
+        self.draw_text('Score: {}'.format(self.player1.score), default_font_bold, 25, white, width/4, 17, align = 'center')
+        self.draw_text('Score: {}'.format(self.player2.score), default_font_bold, 25, white, width-(width/4), 17, align = 'center')
 
         # flip render to the screen
         pygame.display.flip()

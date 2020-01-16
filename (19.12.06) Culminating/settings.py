@@ -23,6 +23,7 @@ width, height = 800, 600 # (640x480 or 800x600 or 1024x768 or 1280x1024)
 fps = 120 # fps limit
 title = 'Food Wars'
 time_limit = 60 # game time limit in seconds
+gui_accent_colour = green
 
 
 # tiles
@@ -32,7 +33,7 @@ gridHeight = height / tileSize
 
 
 # player settings
-player_speed = 400
+player_speed = 500
 
 
 # images
