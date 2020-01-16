@@ -25,13 +25,18 @@ class Game:
         """
         initialize pygame window when an instance is created
         """
+        # initalizes pygame window and name
         pygame.init()
         self.screen = pygame.display.set_mode((width, height))
+        pygame.display.set_caption("{}".format(title))
+
+        # initialize player cameras
         self.canvas = pygame.Surface((width, height))
         self.player1_rect = pygame.Rect(0, 0, width/2, height)
         self.player2_rect = pygame.Rect(width/2, 0, width/2, height)
         self.player1_cam = self.canvas.subsurface(self.player1_rect)
         self.player2_cam = self.canvas.subsurface(self.player2_rect)
+
         self.fpsClock = pygame.time.Clock()
         self.data_loader()
 
@@ -39,14 +44,18 @@ class Game:
         """
         loads paths to access game assets
         """
+        # setting folder variables
         game_folder = path.dirname(__file__)
         map_folder = path.join(game_folder, 'maps')
         image_folder = path.join(game_folder, 'images')
+
+        # setting image varaiables
         self.map = Map(path.join(map_folder, 'tdss.txt'))
         self.floor_image = pygame.image.load(path.join(image_folder, floor_image)).convert_alpha()
         self.wall_image = pygame.image.load(path.join(image_folder, wall_image)).convert_alpha()
         self.player1_image = pygame.image.load(path.join(image_folder, player1_image)).convert_alpha()
         self.player2_image = pygame.image.load(path.join(image_folder, player2_image)).convert_alpha()
+
         # GUI Images
         self.game_over = pygame.image.load(path.join(image_folder, 'Transparent Grey Layer.png')).convert_alpha()
         self.scoreboard_backround = pygame.image.load(path.join(image_folder, 'Scoreboard Grey Layer.png')).convert_alpha()
@@ -59,6 +68,8 @@ class Game:
         font = pygame.font.Font(font_name, size)
         text_surface = font.render(text, True, colour)
         text_rect = text_surface.get_rect()
+
+        # text alignment within rect
         if align == "topleft":
             text_rect.topleft = (x, y)
         if align == "ne":
@@ -77,13 +88,17 @@ class Game:
             text_rect.midleft = (x, y)
         if align == "center":
             text_rect.center = (x, y)
+
+        # blit text to the screen
         self.screen.blit(text_surface, text_rect)
 
     def new(self):
         """
         initializes a new game
         """
+
         self.splashscreen = False
+
         # sprite groups to organize all sprites
         self.all_sprites = pygame.sprite.Group()
         self.players = pygame.sprite.Group()
@@ -150,9 +165,9 @@ class Game:
         part of the game loop - draws the new sprite positions and text to the
         screen
         """
-        pygame.display.set_caption("{} | FPS: {:.0f} | Player 1 Score: {} | Player 2 Score: {}".format(title, self.fpsClock.get_fps(), self.player1.score, self.player2.score))
+        pygame.display.set_caption("{} | FPS: {:.0f}".format(title, self.fpsClock.get_fps()))
 
-        # wipes the screen
+        # wipes both cameras and fills with light grey
         self.player1_cam.fill(lightgrey)
         self.player2_cam.fill(lightgrey)
 
@@ -213,7 +228,7 @@ class Game:
         """
         shows the games start screen
         """
-        # wipes the screen to black
+        # sets the screen as black
         self.screen.fill(black)
 
         # draws splash screen text
@@ -224,6 +239,7 @@ class Game:
         self.draw_text('Press any key to start', default_font_bold, 50, white, width//2, height//2+175, align = 'center')
 
         self.splashscreen = True
+
         # flips final screen to display
         pygame.display.flip()
         self.wait_for_key()
@@ -272,6 +288,7 @@ class Game:
                             self.quit()
                         else:
                             waiting = False
+
 
 game = Game()
 game.show_start_screen()

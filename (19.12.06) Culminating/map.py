@@ -41,7 +41,7 @@ class Camera:
         initializes a camera based on the cam_width
         and cam_height parameters
         """
-        self.camera = pygame.Rect(0, 0, width, height)
+        self.camera = pygame.Rect(0, 0, width/2, height)
         self.width = cam_width
         self.height = cam_height
 
