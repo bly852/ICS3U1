@@ -258,8 +258,10 @@ class Game:
         self.draw_text('GAME OVER', default_font_bold, 100, white, width//2, height//2-100, align = 'center')
         if self.player1.score > self.player2.score:
             self.draw_text('Player 1 Wins!', default_font_bold, 50, white, width//2, height//2+75, align = 'center')
-        else:
+        elif self.player1.score < self.player2.score:
             self.draw_text('Player 2 Wins!', default_font_bold, 50, white, width//2, height//2+75, align = 'center')
+        else:
+            self.draw_text('It was a tie!', default_font_bold, 50, white, width//2, height//2+75, align = 'center')
         self.draw_text('Press Escape to quit the game', default_font_bold, 25, white, width//2, height//2+150, align = 'center')
         self.draw_text('Press any other key to play again', default_font_bold, 25, white, width//2, height//2+175, align = 'center')
 
