@@ -166,7 +166,7 @@ class Game:
         self.screen.blit(self.player2_cam, (width/2, 0))
 
         # blits the GUI background
-        self.screen.blit(self.scoreboard_backround, ((width/4)-(width/16)+5, 0))
+        self.screen.blit(self.scoreboard_backround, ((width/4)-(width/16)+4, 0))
         pygame.draw.line(self.screen, black, (400, 0), (400, 600), 10)
 
         # draws time left to the screen
@@ -230,16 +230,39 @@ class Game:
         """
         shows the game over screen
         """
-        # redraws final screen wiping the scoreboard and timer
+        # wipes the screen
+        self.screen.fill(black)
+
+        # blit all sprites to each players camera
         for sprite in self.all_sprites:
-            self.screen.blit(sprite.image, self.camera1.apply(sprite))
+            self.player1_cam.blit(sprite.image, self.camera1.apply(sprite))
+        for sprite in self.all_sprites:
+            self.player2_cam.blit(sprite.image, self.camera2.apply(sprite))
+
+        # blits both players views onto the main screen
+        self.screen.blit(self.player1_cam, (0, 0))
+        self.screen.blit(self.player2_cam, (width/2, 0))
+
+        # blits the GUI background
+        self.screen.blit(self.scoreboard_backround, ((width/4)-(width/16)+4, 0))
+        pygame.draw.line(self.screen, black, (400, 0), (400, 600), 10)
+
+        # draws time left to the screen
+        self.draw_text(' Time Left: {} seconds'.format(time_limit-(int(self.elapsed_time))), default_font_bold, 25, white, width/2, 15, align = 'center')
+
+        # draws player score to the screen
+        self.draw_text(' Score: {}'.format(self.player1.score), default_font_bold, 25, white, width/4, 15, align = 'center')
+        self.draw_text(' Score: {}'.format(self.player2.score), default_font_bold, 25, white, width-(width/4), 15, align = 'center')
 
         # covers the screen in a transparent grey layer
         self.screen.blit(self.game_over, (0,0))
 
         # draws the game over text
         self.draw_text('GAME OVER', default_font_bold, 100, white, width//2, height//2-100, align = 'center')
-        self.draw_text('SCORE: {}'.format(self.player1.score), default_font_bold, 50, white, width//2, height//2+75, align = 'center')
+        if self.player1.score > self.player2.score:
+            self.draw_text('Player 1 Wins!', default_font_bold, 50, white, width//2, height//2+75, align = 'center')
+        else:
+            self.draw_text('Player 2 Wins!', default_font_bold, 50, white, width//2, height//2+75, align = 'center')
         self.draw_text('Press Escape to quit the game', default_font_bold, 25, white, width//2, height//2+150, align = 'center')
         self.draw_text('Press any other key to play again', default_font_bold, 25, white, width//2, height//2+175, align = 'center')
 
