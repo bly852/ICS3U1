@@ -61,6 +61,6 @@ class Camera:
         # camera limits
         x = min(0, x)
         y = min(0, y)
-        x = max(-(self.width - width), x)
+        x = max(-(self.width - width/2), x)
         y = max(-(self.height - height), y)
         self.camera = pygame.Rect(x, y, self.width, self.height)
