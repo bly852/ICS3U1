@@ -55,12 +55,12 @@ class Camera:
         """
         updates the camera based on the target parameter's movement
         """
-        x = -target.rect.x + int(width / 2)
+        x = -target.rect.x + int(width / 4)
         y = -target.rect.y + int(height / 2)
 
         # camera limits
         x = min(0, x)
         y = min(0, y)
-        x = max(-(self.width - width), x)
+        x = max(-(self.width - width/2), x)
         y = max(-(self.height - height), y)
         self.camera = pygame.Rect(x, y, self.width, self.height)

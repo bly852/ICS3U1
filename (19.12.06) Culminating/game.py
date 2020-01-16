@@ -27,6 +27,11 @@ class Game:
         """
         pygame.init()
         self.screen = pygame.display.set_mode((width, height))
+        self.canvas = pygame.Surface((width, height))
+        self.player1_rect = pygame.Rect(0, 0, width, height)
+        self.player2_rect = pygame.Rect(width/2, 0, width/2, height)
+        self.player1_cam = self.canvas.subsurface(self.player1_rect)
+        self.player2_cam = self.canvas.subsurface(self.player2_rect)
         self.fpsClock = pygame.time.Clock()
         self.data_loader()
 
@@ -88,6 +93,7 @@ class Game:
 
         # initializes the camera for the player
         self.camera1 = Camera(self.map.width, self.map.height, 1)
+        self.camera2 = Camera(self.map.width, self.map.height, 2)
 
         # generates walls and floors
         for row, tiles in enumerate(self.map.data):
@@ -137,6 +143,7 @@ class Game:
         """
         self.all_sprites.update()
         self.camera1.update(self.player1)
+        self.camera2.update(self.player2)
 
     def draw(self):
         """
@@ -148,18 +155,26 @@ class Game:
         # wipes the screen
         self.screen.fill(black)
 
-        # blit all sprites to the screen
+        # blit all sprites to each players camera
         for sprite in self.all_sprites:
-            self.screen.blit(sprite.image, self.camera1.apply(sprite))
+            self.player1_cam.blit(sprite.image, self.camera1.apply(sprite))
+        for sprite in self.all_sprites:
+            self.player2_cam.blit(sprite.image, self.camera2.apply(sprite))
 
-        # draws image as the scoreboard background
-        self.screen.blit(self.scoreboard_backround, (5, 5))
+        # blits both players views onto the main screen
+        self.screen.blit(self.player1_cam, (0, 0))
+        self.screen.blit(self.player2_cam, (width/2, 0))
+
+        # blits the GUI background
+        self.screen.blit(self.scoreboard_backround, ((width/4)-(width/16)+4, 0))
+        pygame.draw.line(self.screen, black, (400, 0), (400, 600), 10)
 
         # draws time left to the screen
-        self.draw_text(' Time Left: {} seconds'.format(time_limit-(int(self.elapsed_time))), default_font_bold, 25, white, 0, 0)
+        self.draw_text(' Time Left: {} seconds'.format(time_limit-(int(self.elapsed_time))), default_font_bold, 25, white, width/2, 15, align = 'center')
 
         # draws player score to the screen
-        self.draw_text(' Score: {}'.format(self.player1.score), default_font_bold, 25, white, 0, 25)
+        self.draw_text(' Score: {}'.format(self.player1.score), default_font_bold, 25, white, width/4, 15, align = 'center')
+        self.draw_text(' Score: {}'.format(self.player2.score), default_font_bold, 25, white, width-(width/4), 15, align = 'center')
 
         # flip render to the screen
         pygame.display.flip()
@@ -202,8 +217,9 @@ class Game:
 
         # draws splash screen text
         self.draw_text('FOOD WARS', default_font_bold, 100, white, width//2, height//2-100, align = 'center')
-        self.draw_text('WASD to move', default_font_bold, 25, white, width//2, height//2+25, align = 'center')
-        self.draw_text('Pickup food to get points', default_font_bold, 25, white, width//2, height//2+50, align = 'center')
+        self.draw_text('WASD to move Mr. Pileggi (Player 1)', default_font_bold, 25, white, width//2, height//2+25, align = 'center')
+        self.draw_text('Arrow Keys to move Mr. Chun (Player 2)', default_font_bold, 25, white, width//2, height//2+50, align = 'center')
+        self.draw_text('Pickup food to get points', default_font_bold, 25, white, width//2, height//2+100, align = 'center')
         self.draw_text('Press any key to start', default_font_bold, 50, white, width//2, height//2+175, align = 'center')
 
         self.splashscreen = True
@@ -215,16 +231,39 @@ class Game:
         """
         shows the game over screen
         """
-        # redraws final screen wiping the scoreboard and timer
+        # wipes the screen
+        self.screen.fill(black)
+
+        # blit all sprites to each players camera
         for sprite in self.all_sprites:
-            self.screen.blit(sprite.image, self.camera1.apply(sprite))
+            self.player1_cam.blit(sprite.image, self.camera1.apply(sprite))
+        for sprite in self.all_sprites:
+            self.player2_cam.blit(sprite.image, self.camera2.apply(sprite))
+
+        # blits both players views onto the main screen
+        self.screen.blit(self.player1_cam, (0, 0))
+        self.screen.blit(self.player2_cam, (width/2, 0))
+
+        # blits the GUI background
+        self.screen.blit(self.scoreboard_backround, ((width/4)-(width/16)+4, 0))
+        pygame.draw.line(self.screen, black, (400, 0), (400, 600), 10)
+
+        # draws time left to the screen
+        self.draw_text(' Time Left: {} seconds'.format(time_limit-(int(self.elapsed_time))), default_font_bold, 25, white, width/2, 15, align = 'center')
+
+        # draws player score to the screen
+        self.draw_text(' Score: {}'.format(self.player1.score), default_font_bold, 25, white, width/4, 15, align = 'center')
+        self.draw_text(' Score: {}'.format(self.player2.score), default_font_bold, 25, white, width-(width/4), 15, align = 'center')
 
         # covers the screen in a transparent grey layer
         self.screen.blit(self.game_over, (0,0))
 
         # draws the game over text
         self.draw_text('GAME OVER', default_font_bold, 100, white, width//2, height//2-100, align = 'center')
-        self.draw_text('SCORE: {}'.format(self.player1.score), default_font_bold, 50, white, width//2, height//2+75, align = 'center')
+        if self.player1.score > self.player2.score:
+            self.draw_text('Player 1 Wins!', default_font_bold, 50, white, width//2, height//2+75, align = 'center')
+        else:
+            self.draw_text('Player 2 Wins!', default_font_bold, 50, white, width//2, height//2+75, align = 'center')
         self.draw_text('Press Escape to quit the game', default_font_bold, 25, white, width//2, height//2+150, align = 'center')
         self.draw_text('Press any other key to play again', default_font_bold, 25, white, width//2, height//2+175, align = 'center')
 
