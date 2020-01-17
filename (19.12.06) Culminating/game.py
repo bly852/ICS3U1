@@ -318,7 +318,7 @@ class Game:
                 if event.type == QUIT:
                     waiting = False
                     self.quit()
-                if time.time() - start_time >= 2:
+                if time.time() - start_time >= 1:
                     # if escape is pressed quit the game, otherwise start new
                     # game
                     if event.type == KEYDOWN:

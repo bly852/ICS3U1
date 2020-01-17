@@ -110,13 +110,11 @@ class Player(pygame.sprite.Sprite):
             if (x > 0.05 or x < -0.05) and (y > 0.05 or y < -0.05):
                 self.velX += joystick.get_axis(1) * player_speed
                 self.velY -= joystick.get_axis(0) * player_speed
-            print (self.velX)
-            print (self.velY)
 
         # joystick control for player 2
         elif self.playerNum == 2:
             # joystick initialization
-            joystick = pygame.joystick.Joystick(0)
+            joystick = pygame.joystick.Joystick(1)
             joystick.init()
 
             x = joystick.get_axis(1)
