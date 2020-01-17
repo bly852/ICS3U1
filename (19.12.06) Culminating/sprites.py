@@ -42,7 +42,7 @@ class Player(pygame.sprite.Sprite):
 
     def get_keys(self):
         """
-        checks for all keys pressed
+        checks for all keys pressed and changes the players velocity on that axis to the player speed varaiable
         """
         self.velX, self.velY = 0, 0
         keys = pygame.key.get_pressed()
@@ -64,6 +64,16 @@ class Player(pygame.sprite.Sprite):
                 self.velY = -player_speed
             if keys[pygame.K_DOWN]:
                 self.velY = player_speed
+
+        # if moving diagonally reduce the speed
+        if self.velX > 0 and self.velY > 0:
+            self.velX = player_speed * 0.701
+            self.velY = player_speed * 0.701
+        elif self.velX < 0 and self.velY < 0:
+            self.velX = player_speed * -0.701
+            self.velY = player_speed * -0.701
+
+
 
     def direction(self):
         """

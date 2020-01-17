@@ -11,8 +11,6 @@
 import pygame
 import random
 import sys
-import time
-import pygame_textinput as pytxt
 from pygame.locals import *
 from settings import *
 from sprites import *
