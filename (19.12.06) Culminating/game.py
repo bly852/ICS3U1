@@ -11,6 +11,7 @@
 import pygame
 import random
 import sys
+import time
 from pygame.locals import *
 from settings import *
 from sprites import *
@@ -308,6 +309,7 @@ class Game:
         """
         game loop that waits at the game over screen
         """
+        start_time = time.time()
         pygame.event.clear()
         waiting = True
         while waiting:
@@ -316,15 +318,17 @@ class Game:
                 if event.type == QUIT:
                     waiting = False
                     self.quit()
-                # if escape is pressed quit the game, otherwise start new game
-                if event.type == KEYDOWN:
-                    if self.splashscreen == True:
-                        waiting = False
-                    else:
-                        if event.key == K_ESCAPE:
-                            self.quit()
-                        else:
+                if time.time() - start_time >= 2:
+                    # if escape is pressed quit the game, otherwise start new
+                    # game
+                    if event.type == KEYDOWN:
+                        if self.splashscreen == True:
                             waiting = False
+                        else:
+                            if event.key == K_ESCAPE:
+                                self.quit()
+                            else:
+                                waiting = False
 
 
 game = Game()
