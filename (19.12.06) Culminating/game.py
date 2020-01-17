@@ -8,7 +8,10 @@
 
 # main game script
 
-import pygame, random, sys, time
+import pygame
+import random
+import sys
+import time
 import pygame_textinput as pytxt
 from pygame.locals import *
 from settings import *
@@ -21,6 +24,7 @@ class Game:
     """
     Game class that contains the entire game
     """
+
     def __init__(self):
         """
         initialize pygame window when an instance is created
@@ -53,12 +57,16 @@ class Game:
         self.map = Map(path.join(map_folder, 'tdss.txt'))
         self.floor_image = pygame.image.load(path.join(image_folder, floor_image)).convert_alpha()
         self.wall_image = pygame.image.load(path.join(image_folder, wall_image)).convert_alpha()
-        self.player1_image = pygame.image.load(path.join(image_folder, player1_image)).convert_alpha()
-        self.player2_image = pygame.image.load(path.join(image_folder, player2_image)).convert_alpha()
+        self.player1_image = pygame.image.load(
+            path.join(image_folder, player1_image)).convert_alpha()
+        self.player2_image = pygame.image.load(
+            path.join(image_folder, player2_image)).convert_alpha()
 
         # GUI Images
-        self.game_over = pygame.image.load(path.join(image_folder, 'Transparent Grey Layer.png')).convert_alpha()
-        self.scoreboard_backround = pygame.image.load(path.join(image_folder, 'Scoreboard Grey Layer.png')).convert_alpha()
+        self.game_over = pygame.image.load(
+            path.join(image_folder, 'Transparent Grey Layer.png')).convert_alpha()
+        self.scoreboard_backround = pygame.image.load(
+            path.join(image_folder, 'Scoreboard Grey Layer.png')).convert_alpha()
 
     def draw_text(self, text, font_name, size, colour, x, y, align="topleft"):
         """
@@ -115,7 +123,7 @@ class Game:
             for col, tile in enumerate(tiles):
                 if tile == 'X':
                     Wall(self, col, row)
-                elif tile =='.':
+                elif tile == '.':
                     Floor(self, col, row)
 
         # generates initial food sprites
@@ -187,17 +195,21 @@ class Game:
 
         # draws the GUI background
         pygame.draw.line(self.screen, gui_accent_colour, (width/2, 0), (width/2, height), 14)
-        pygame.draw.rect(self.screen, gui_accent_colour, ((width/4)-(width/12)-2, 0, width-(width/4)-(width/12)+4, 37))
+        pygame.draw.rect(self.screen, gui_accent_colour, ((width/4) -
+                                                          (width/12)-2, 0, width-(width/4)-(width/12)+4, 37))
         pygame.draw.line(self.screen, black, (width/2, 2), (width/2, height), 10)
-        pygame.draw.rect(self.screen, black, ((width/4)-(width/12), 2, width-(width/4)-(width/12), 33))
-
+        pygame.draw.rect(self.screen, black, ((width/4)-(width/12),
+                                              2, width-(width/4)-(width/12), 33))
 
         # draws time left to the screen
-        self.draw_text('{} seconds left'.format(time_limit-(int(self.elapsed_time))), default_font_bold, 25, white, width/2, 17, align = 'center')
+        self.draw_text('{} seconds left'.format(time_limit-(int(self.elapsed_time))),
+                       default_font_bold, 25, white, width/2, 17, align='center')
 
         # draws player score to the screen
-        self.draw_text('Score: {}'.format(self.player1.score), default_font_bold, 25, white, width/4, 17, align = 'center')
-        self.draw_text('Score: {}'.format(self.player2.score), default_font_bold, 25, white, width-(width/4), 17, align = 'center')
+        self.draw_text('Score: {}'.format(self.player1.score),
+                       default_font_bold, 25, white, width/4, 17, align='center')
+        self.draw_text('Score: {}'.format(self.player2.score), default_font_bold,
+                       25, white, width-(width/4), 17, align='center')
 
         # flip render to the screen
         pygame.display.flip()
@@ -220,7 +232,8 @@ class Game:
         # sprites is less than amount of initial food sprites
         if len(self.food) < (self.map.tileWidth*self.map.tileHeight)//food_spawn_rate:
             if self.foodTimer > food_spawn_timer:
-                Food(self, random.randint(0, self.map.tileWidth), random.randint(0, self.map.tileHeight))
+                Food(self, random.randint(0, self.map.tileWidth),
+                     random.randint(0, self.map.tileHeight))
                 self.foodTimer = 0
 
         # checks for events to exit the game
@@ -239,11 +252,16 @@ class Game:
         self.screen.fill(black)
 
         # draws splash screen text
-        self.draw_text('FOOD WARS', default_font_bold, 100, white, width//2, height//2-100, align = 'center')
-        self.draw_text('WASD to move Mr. Pileggi (Player 1)', default_font_bold, 25, white, width//2, height//2+25, align = 'center')
-        self.draw_text('Arrow Keys to move Mr. Chun (Player 2)', default_font_bold, 25, white, width//2, height//2+50, align = 'center')
-        self.draw_text('Pickup food to get points', default_font_bold, 25, white, width//2, height//2+100, align = 'center')
-        self.draw_text('Press any key to start', default_font_bold, 50, white, width//2, height//2+175, align = 'center')
+        self.draw_text('FOOD WARS', default_font_bold, 100, white,
+                       width//2, height//2-100, align='center')
+        self.draw_text('WASD to move Mr. Pileggi (Player 1)', default_font_bold,
+                       25, white, width//2, height//2+25, align='center')
+        self.draw_text('Arrow Keys to move Mr. Chun (Player 2)', default_font_bold,
+                       25, white, width//2, height//2+50, align='center')
+        self.draw_text('Pickup food to get points', default_font_bold,
+                       25, white, width//2, height//2+100, align='center')
+        self.draw_text('Press any key to start', default_font_bold, 50,
+                       white, width//2, height//2+175, align='center')
 
         self.splashscreen = True
 
@@ -259,18 +277,24 @@ class Game:
         self.draw()
 
         # covers the final screen in a transparent grey layer
-        self.screen.blit(self.game_over, (0,0))
+        self.screen.blit(self.game_over, (0, 0))
 
         # draws the game over text
-        self.draw_text('GAME OVER', default_font_bold, 100, white, width//2, height//2-100, align = 'center')
+        self.draw_text('GAME OVER', default_font_bold, 100, white,
+                       width//2, height//2-100, align='center')
         if self.player1.score > self.player2.score:
-            self.draw_text('Player 1 Wins!', default_font_bold, 50, white, width//2, height//2+75, align = 'center')
+            self.draw_text('Player 1 Wins!', default_font_bold, 50,
+                           white, width//2, height//2+75, align='center')
         elif self.player1.score < self.player2.score:
-            self.draw_text('Player 2 Wins!', default_font_bold, 50, white, width//2, height//2+75, align = 'center')
+            self.draw_text('Player 2 Wins!', default_font_bold, 50,
+                           white, width//2, height//2+75, align='center')
         else:
-            self.draw_text('It was a tie!', default_font_bold, 50, white, width//2, height//2+75, align = 'center')
-        self.draw_text('Press Escape to quit the game', default_font_bold, 25, white, width//2, height//2+150, align = 'center')
-        self.draw_text('Press any other key to play again', default_font_bold, 25, white, width//2, height//2+175, align = 'center')
+            self.draw_text('It was a tie!', default_font_bold, 50,
+                           white, width//2, height//2+75, align='center')
+        self.draw_text('Press Escape to quit the game', default_font_bold,
+                       25, white, width//2, height//2+150, align='center')
+        self.draw_text('Press any other key to play again', default_font_bold,
+                       25, white, width//2, height//2+175, align='center')
 
         # flips final screen to display
         pygame.display.flip()

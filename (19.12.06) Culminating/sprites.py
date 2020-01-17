@@ -8,7 +8,9 @@
 
 # sprite classes
 
-import pygame, random, os
+import pygame
+import random
+import os
 from settings import *
 
 
@@ -16,6 +18,7 @@ class Player(pygame.sprite.Sprite):
     """
     player class that contains all data and functions related to the player
     """
+
     def __init__(self, game, x, y, playerNum):
         """
         initalizes a player sprite when an instance is created in the game
@@ -179,7 +182,7 @@ class Player(pygame.sprite.Sprite):
         """
         collides = pygame.sprite.spritecollide(self, self.game.food, True)
         if collides:
-            self.score +=1
+            self.score += 1
 
     def update(self):
         """
@@ -202,6 +205,7 @@ class Wall(pygame.sprite.Sprite):
     """
     class to contain all the data for wall sprites
     """
+
     def __init__(self, game, x, y):
         """
         initalizes a wall sprite when an instance is create in the game
@@ -222,6 +226,7 @@ class Floor(pygame.sprite.Sprite):
     """
     class to contain all the data for floor sprites
     """
+
     def __init__(self, game, x, y):
         """
         initalizes a floor sprite when an instance is created in the game
@@ -242,6 +247,7 @@ class Food(pygame.sprite.Sprite):
     """
     class to contain all the data for food sprites
     """
+
     def __init__(self, game, x, y):
         """
         initalizes a food sprite when an instance is created in the game
@@ -255,9 +261,9 @@ class Food(pygame.sprite.Sprite):
         game_folder = os.path.dirname(__file__)
         image_folder = os.path.join(game_folder, 'images')
         food_folder = os.path.join(image_folder, 'food')
-        self.image = pygame.image.load(os.path.join(food_folder ,(random.choice([
+        self.image = pygame.image.load(os.path.join(food_folder, (random.choice([
             x for x in os.listdir(food_folder)
-                if os.path.isfile(os.path.join(food_folder, x))]))))
+            if os.path.isfile(os.path.join(food_folder, x))]))))
 
         self.rect = self.image.get_rect()
         self.x = x

@@ -16,6 +16,7 @@ class Map:
     """
     class to contain the map reader
     """
+
     def __init__(self, filename):
         """
         initializes and reads the map based of the text
@@ -36,6 +37,7 @@ class Camera:
     """
     class to contain the games camera
     """
+
     def __init__(self, cam_width, cam_height, camNum):
         """
         initializes a camera based on the cam_width
