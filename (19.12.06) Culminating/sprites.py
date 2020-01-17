@@ -110,6 +110,8 @@ class Player(pygame.sprite.Sprite):
             if (x > 0.05 or x < -0.05) and (y > 0.05 or y < -0.05):
                 self.velX += joystick.get_axis(1) * player_speed
                 self.velY -= joystick.get_axis(0) * player_speed
+            print (self.velX)
+            print (self.velY)
 
         # joystick control for player 2
         elif self.playerNum == 2:
@@ -131,44 +133,44 @@ class Player(pygame.sprite.Sprite):
         direction
         """
         if self.playerNum == 1:
-            if self.velX > 0:
-                if self.velY < 0:
+            if self.velX > 100:
+                if self.velY < -100:
                     self.image = pygame.transform.rotate(self.game.player1_image, 45)
-                elif self.velY > 0:
+                elif self.velY > 100:
                     self.image = pygame.transform.rotate(self.game.player1_image, -45)
                 else:
                     self.image = pygame.transform.rotate(self.game.player1_image, 0)
-            elif self.velX < 0:
-                if self.velY < 0:
+            elif self.velX < -100:
+                if self.velY < -100:
                     self.image = pygame.transform.rotate(self.game.player1_image, 135)
-                elif self.velY > 0:
+                elif self.velY > 100:
                     self.image = pygame.transform.rotate(self.game.player1_image, -135)
                 else:
                     self.image = pygame.transform.rotate(self.game.player1_image, 180)
             else:
-                if self.velY < 0:
+                if self.velY < -100:
                     self.image = pygame.transform.rotate(self.game.player1_image, 90)
-                elif self.velY > 0:
+                elif self.velY > 100:
                     self.image = pygame.transform.rotate(self.game.player1_image, -90)
         else:
-            if self.velX > 0:
-                if self.velY < 0:
+            if self.velX > 100:
+                if self.velY < -100:
                     self.image = pygame.transform.rotate(self.game.player2_image, 45)
-                elif self.velY > 0:
+                elif self.velY > 100:
                     self.image = pygame.transform.rotate(self.game.player2_image, -45)
                 else:
                     self.image = pygame.transform.rotate(self.game.player2_image, 0)
-            elif self.velX < 0:
-                if self.velY < 0:
+            elif self.velX < -100:
+                if self.velY < -100:
                     self.image = pygame.transform.rotate(self.game.player2_image, 135)
-                elif self.velY > 0:
+                elif self.velY > 100:
                     self.image = pygame.transform.rotate(self.game.player2_image, -135)
                 else:
                     self.image = pygame.transform.rotate(self.game.player2_image, 180)
             else:
-                if self.velY < 0:
+                if self.velY < -100:
                     self.image = pygame.transform.rotate(self.game.player2_image, 90)
-                elif self.velY > 0:
+                elif self.velY > 100:
                     self.image = pygame.transform.rotate(self.game.player2_image, -90)
 
     def wall_collision(self, axis):
