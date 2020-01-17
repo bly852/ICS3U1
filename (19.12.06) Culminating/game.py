@@ -32,6 +32,10 @@ class Game:
         self.screen = pygame.display.set_mode((width, height))
         pygame.display.set_caption("{}".format(title))
 
+        # joystick initialization
+        pygame.joystick.init()
+        # returns the count of joysticks plugged in
+
         # initialize player cameras
         self.canvas = pygame.Surface((width, height))
         self.player1_rect = pygame.Rect(0, 0, width/2, height)
@@ -103,6 +107,8 @@ class Game:
         initializes a new game
         """
 
+
+        # tells the game it is no longer at the spash screen
         self.splashscreen = False
 
         # sprite groups to organize all sprites

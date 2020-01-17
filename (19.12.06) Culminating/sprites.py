@@ -10,8 +10,10 @@
 
 import pygame
 import random
+import math
 import os
 from settings import *
+
 
 
 class Player(pygame.sprite.Sprite):
@@ -22,23 +24,37 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, game, x, y, playerNum):
         """
         initalizes a player sprite when an instance is created in the game
-        parameter,at the x and y paramters, and player num
+        parameter, at the x and y paramters, and with the player number
         """
         self.playerNum = playerNum
         self.groups = game.all_sprites, game.players
         pygame.sprite.Sprite.__init__(self, self.groups)
         self.game = game
 
+        # image selection for each player
         if self.playerNum == 1:
             self.image = pygame.transform.rotate(self.game.player1_image, 90)
         else:
             self.image = pygame.transform.rotate(self.game.player2_image, 90)
         self.rect = self.image.get_rect()
+
+        # setting the players base movement velocity
         self.velX, self.velY = 0, 0
+
+        # setting the players position on the grid
         self.x = x * tileSize - tileSize
         self.y = y * tileSize - tileSize
 
+        # players starting score
         self.score = 0
+
+        # check for number of joysticks connected and sets whether if joystick
+        # should be enabled
+        self.joystick_count = pygame.joystick.get_count()
+        if self.joystick_count == 2:
+            self.joystick_enabled = True
+        else:
+            self.joystick_enabled = False
 
     def get_keys(self):
         """
@@ -46,6 +62,8 @@ class Player(pygame.sprite.Sprite):
         """
         self.velX, self.velY = 0, 0
         keys = pygame.key.get_pressed()
+
+        # player 1 controls
         if self.playerNum == 1:
             if keys[pygame.K_a]:
                 self.velX = -player_speed
@@ -55,6 +73,8 @@ class Player(pygame.sprite.Sprite):
                 self.velY = -player_speed
             if keys[pygame.K_s]:
                 self.velY = player_speed
+
+        # player 2 controls
         else:
             if keys[pygame.K_LEFT]:
                 self.velX = -player_speed
@@ -73,7 +93,32 @@ class Player(pygame.sprite.Sprite):
             self.velX = player_speed * -0.701
             self.velY = player_speed * -0.701
 
+    def get_joystick_axis(self):
+        """
+        changes the velocity of the character in the x and y based on joystick
+        input
+        """
+        # joystick control for player 1
+        if self.playerNum == 1:
+            # joystick initialization
+            joystick = pygame.joystick.Joystick(0)
+            joystick.init()
 
+            # checks for axis movement and changes velX and velY
+            if joystick.get_axis(1) != 0 and joystick.get_axis(0) != 0:
+                self.velX += joystick.get_axis(1) * player_speed
+                self.velY -= joystick.get_axis(0) * player_speed
+
+        # joystick control for player 2
+        elif self.playerNum == 2:
+            # joystick initialization
+            joystick = pygame.joystick.Joystick(0)
+            joystick.init()
+
+            # checks for axis movement and changes velX and velY
+            if joystick.get_axis(1) != 0 and joystick.get_axis(0) != 0:
+                self.velX += joystick.get_axis(1) * player_speed
+                self.velY -= joystick.get_axis(0) * player_speed
 
     def direction(self):
         """
@@ -199,6 +244,8 @@ class Player(pygame.sprite.Sprite):
         updates the players position
         """
         self.get_keys()
+        if self.joystick_enabled == True:
+            self.get_joystick_axis()
         self.direction()
         self.x += self.velX * self.game.dt
         self.y += self.velY * self.game.dt
