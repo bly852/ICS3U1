@@ -104,8 +104,10 @@ class Player(pygame.sprite.Sprite):
             joystick = pygame.joystick.Joystick(0)
             joystick.init()
 
+            x = joystick.get_axis(1)
+            y = joystick.get_axis(0)
             # checks for axis movement and changes velX and velY
-            if joystick.get_axis(1) != 0 and joystick.get_axis(0) != 0:
+            if (x > 0.05 or x < -0.05) and (y > 0.05 or y < -0.05):
                 self.velX += joystick.get_axis(1) * player_speed
                 self.velY -= joystick.get_axis(0) * player_speed
 
@@ -115,10 +117,13 @@ class Player(pygame.sprite.Sprite):
             joystick = pygame.joystick.Joystick(0)
             joystick.init()
 
+            x = joystick.get_axis(1)
+            y = joystick.get_axis(0)
             # checks for axis movement and changes velX and velY
-            if joystick.get_axis(1) != 0 and joystick.get_axis(0) != 0:
+            if (x > 0.05 or x < -0.05) and (y > 0.05 or y < -0.05):
                 self.velX += joystick.get_axis(1) * player_speed
                 self.velY -= joystick.get_axis(0) * player_speed
+
 
     def direction(self):
         """
