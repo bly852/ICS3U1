@@ -15,7 +15,6 @@ import os
 from settings import *
 
 
-
 class Player(pygame.sprite.Sprite):
     """
     player class that contains all data and functions related to the player
@@ -323,9 +322,7 @@ class Food(pygame.sprite.Sprite):
         game_folder = os.path.dirname(__file__)
         image_folder = os.path.join(game_folder, 'images')
         food_folder = os.path.join(image_folder, 'food')
-        self.image = pygame.image.load(os.path.join(food_folder, (random.choice([
-            x for x in os.listdir(food_folder)
-            if os.path.isfile(os.path.join(food_folder, x))]))))
+        self.image = pygame.image.load(os.path.join(food_folder, (random.choice(food_images))))
 
         self.rect = self.image.get_rect()
         self.x = x
