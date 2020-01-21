@@ -100,7 +100,7 @@ class Player(pygame.sprite.Sprite):
         # joystick control for player 1
         if self.playerNum == 1:
             # joystick initialization
-            joystick = pygame.joystick.Joystick(0)
+            joystick = pygame.joystick.Joystick(1)
             joystick.init()
 
             x = joystick.get_axis(1)
@@ -113,7 +113,7 @@ class Player(pygame.sprite.Sprite):
         # joystick control for player 2
         elif self.playerNum == 2:
             # joystick initialization
-            joystick = pygame.joystick.Joystick(1)
+            joystick = pygame.joystick.Joystick(0)
             joystick.init()
 
             x = joystick.get_axis(1)
