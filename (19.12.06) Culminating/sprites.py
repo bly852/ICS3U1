@@ -50,7 +50,7 @@ class Player(pygame.sprite.Sprite):
         # check for number of joysticks connected and sets whether if joystick
         # should be enabled
         self.joystick_count = pygame.joystick.get_count()
-        if self.joystick_count == 2:
+        if self.joystick_count == 1:
             self.joystick_enabled = True
         else:
             self.joystick_enabled = False
@@ -100,13 +100,13 @@ class Player(pygame.sprite.Sprite):
         # joystick control for player 1
         if self.playerNum == 1:
             # joystick initialization
-            joystick = pygame.joystick.Joystick(1)
+            joystick = pygame.joystick.Joystick(0)
             joystick.init()
 
-            x = joystick.get_axis(1)
-            y = joystick.get_axis(0)
+            x = round(joystick.get_axis(1))
+            y = round(joystick.get_axis(0))
             # checks for axis movement and changes velX and velY
-            if (x > 0.05 or x < -0.05) and (y > 0.05 or y < -0.05):
+            if x != 0 or y != 0:
                 self.velX += joystick.get_axis(1) * player_speed
                 self.velY -= joystick.get_axis(0) * player_speed
 
@@ -116,10 +116,10 @@ class Player(pygame.sprite.Sprite):
             joystick = pygame.joystick.Joystick(0)
             joystick.init()
 
-            x = joystick.get_axis(1)
-            y = joystick.get_axis(0)
+            x = round(joystick.get_axis(1))
+            y = round(joystick.get_axis(0))
             # checks for axis movement and changes velX and velY
-            if (x > 0.05 or x < -0.05) and (y > 0.05 or y < -0.05):
+            if x != 0 or y != 0:
                 self.velX += joystick.get_axis(1) * player_speed
                 self.velY -= joystick.get_axis(0) * player_speed
 
