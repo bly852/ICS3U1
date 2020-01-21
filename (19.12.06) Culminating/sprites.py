@@ -15,7 +15,6 @@ import os
 from settings import *
 
 
-
 class Player(pygame.sprite.Sprite):
     """
     player class that contains all data and functions related to the player
@@ -104,25 +103,25 @@ class Player(pygame.sprite.Sprite):
             joystick = pygame.joystick.Joystick(0)
             joystick.init()
 
-            x = joystick.get_axis(1)
-            y = joystick.get_axis(0)
+            x = round(joystick.get_axis(0))
+            y = round(joystick.get_axis(1))
             # checks for axis movement and changes velX and velY
-            if (x > 0.05 or x < -0.05) and (y > 0.05 or y < -0.05):
-                self.velX += joystick.get_axis(1) * player_speed
-                self.velY -= joystick.get_axis(0) * player_speed
+            if x != 0 or y != 0:
+                self.velX += joystick.get_axis(0) * player_speed
+                self.velY += joystick.get_axis(1) * player_speed
 
         # joystick control for player 2
         elif self.playerNum == 2:
             # joystick initialization
-            joystick = pygame.joystick.Joystick(1)
+            joystick = pygame.joystick.Joystick(0)
             joystick.init()
 
-            x = joystick.get_axis(1)
-            y = joystick.get_axis(0)
+            x = round(joystick.get_axis(0))
+            y = round(joystick.get_axis(1))
             # checks for axis movement and changes velX and velY
-            if (x > 0.05 or x < -0.05) and (y > 0.05 or y < -0.05):
-                self.velX += joystick.get_axis(1) * player_speed
-                self.velY -= joystick.get_axis(0) * player_speed
+            if x != 0 or y != 0:
+                self.velX += joystick.get_axis(0) * player_speed
+                self.velY += joystick.get_axis(1) * player_speed
 
 
     def direction(self):
@@ -323,9 +322,7 @@ class Food(pygame.sprite.Sprite):
         game_folder = os.path.dirname(__file__)
         image_folder = os.path.join(game_folder, 'images')
         food_folder = os.path.join(image_folder, 'food')
-        self.image = pygame.image.load(os.path.join(food_folder, (random.choice([
-            x for x in os.listdir(food_folder)
-            if os.path.isfile(os.path.join(food_folder, x))]))))
+        self.image = pygame.image.load(os.path.join(food_folder, (random.choice(food_images))))
 
         self.rect = self.image.get_rect()
         self.x = x

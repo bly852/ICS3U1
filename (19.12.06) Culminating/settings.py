@@ -41,6 +41,7 @@ player1_image = 'hitman1_hold.png'
 player2_image = 'manBlue_hold.png'
 floor_image = 'brick_floor32x32.png'
 wall_image = 'mask_32x_0.png'
+food_images = ['baconcheeseburger1.png', 'bakedziti1.png', 'beanbun1.png', 'blackdragonroll1.png', 'newyorkstrip1.png', 'supreme1.png', 'wedgesalad1.png']
 
 
 # food settings
