@@ -49,12 +49,8 @@ class Game:
 
     def data_loader(self):
         """
-        loads paths to access game assets
+        loads game assets from folders into memory
         """
-        # setting folder variables
-        game_folder = path.dirname(__file__)
-        map_folder = path.join(game_folder, 'maps')
-        image_folder = path.join(game_folder, 'images')
 
         # setting image varaiables
         self.map = Map(path.join(map_folder, 'tdss.txt'))
@@ -115,6 +111,7 @@ class Game:
         # sprite groups to organize all sprites
         self.all_sprites = pygame.sprite.Group()
         self.players = pygame.sprite.Group()
+        self.students = pygame.sprite.Group()
         self.walls = pygame.sprite.Group()
         self.floor = pygame.sprite.Group()
         self.food = pygame.sprite.Group()

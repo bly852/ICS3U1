@@ -8,6 +8,8 @@
 
 # game variables and settings
 
+import os
+
 # colours
 blue = (66, 144, 245)
 red = (247, 59, 49)
@@ -35,6 +37,12 @@ gridHeight = height / tileSize
 # player settings
 player_speed = 500
 
+
+# folders | loads the paths to the game folders
+game_folder = os.path.dirname(__file__)
+image_folder = os.path.join(game_folder, 'images')
+food_folder = os.path.join(image_folder, 'food')
+map_folder = os.path.join(game_folder, 'maps')
 
 # images
 player1_image = 'hitman1_hold.png'
