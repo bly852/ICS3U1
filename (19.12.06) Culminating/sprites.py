@@ -31,7 +31,7 @@ class Player(pygame.sprite.Sprite):
         self.game = game
 
         # image selection for each player
-        if self.playerNum == 1:
+        if self.playerNum == 2:
             self.image = pygame.transform.rotate(self.game.player1_image, 90)
         else:
             self.image = pygame.transform.rotate(self.game.player2_image, 90)
@@ -100,29 +100,36 @@ class Player(pygame.sprite.Sprite):
         # joystick control for player 1
         if self.playerNum == 1:
             # joystick initialization
-            joystick = pygame.joystick.Joystick(1)
+            joystick = pygame.joystick.Joystick(0)
             joystick.init()
 
-            x = round(joystick.get_axis(0))
-            y = round(joystick.get_axis(1))
+            # Different joystick settings for Xbox controllers
+            if joystick.get_name() == 'Xbox Wireless Controller':
             # checks for axis movement and changes velX and velY
-            if x != 0 or y != 0:
-                self.velX += joystick.get_axis(0) * player_speed
-                self.velY += joystick.get_axis(1) * player_speed
+                if round(joystick.get_axis(0)) != 0 or round(joystick.get_axis(1)) != 0:
+                    self.velX += joystick.get_axis(0) * player_speed
+                    self.velY += joystick.get_axis(1) * player_speed
+            else:
+                if round(joystick.get_axis(1)) != 0 or round(joystick.get_axis(0)) != 0:
+                    self.velX += joystick.get_axis(1) * player_speed
+                    self.velY -= joystick.get_axis(0) * player_speed
 
         # joystick control for player 2
         elif self.playerNum == 2:
             # joystick initialization
-            joystick = pygame.joystick.Joystick(0)
+            joystick = pygame.joystick.Joystick(1)
             joystick.init()
 
-            x = round(joystick.get_axis(0))
-            y = round(joystick.get_axis(1))
+            # Different joystick settings for Xbox controllers
+            if joystick.get_name() == 'Xbox Wireless Controller':
             # checks for axis movement and changes velX and velY
-            if x != 0 or y != 0:
-                self.velX += joystick.get_axis(0) * player_speed
-                self.velY += joystick.get_axis(1) * player_speed
-
+                if round(joystick.get_axis(0)) != 0 or round(joystick.get_axis(1)) != 0:
+                    self.velX += joystick.get_axis(0) * player_speed
+                    self.velY += joystick.get_axis(1) * player_speed
+            else:
+                if round(joystick.get_axis(1)) != 0 or round(joystick.get_axis(0)) != 0:
+                    self.velX += joystick.get_axis(1) * player_speed
+                    self.velY -= joystick.get_axis(0) * player_speed
 
     def direction(self):
         """
