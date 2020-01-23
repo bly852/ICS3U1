@@ -47,8 +47,7 @@ class Player(pygame.sprite.Sprite):
         # players starting score
         self.score = 0
 
-        # check for number of joysticks connected and sets whether if joystick
-        # should be enabled
+        # if joysticks are connected, enable joystick controls for the player
         self.joystick_count = pygame.joystick.get_count()
         if self.joystick_count > 0:
             self.joystick_enabled = True
@@ -57,7 +56,8 @@ class Player(pygame.sprite.Sprite):
 
     def get_keys(self):
         """
-        checks for all keys pressed and changes the players velocity on that axis to the player speed varaiable
+        checks for all keys pressed and changes the players velocity on that
+        axis to the player speed varaiable
         """
         self.velX, self.velY = 0, 0
         keys = pygame.key.get_pressed()
@@ -97,6 +97,7 @@ class Player(pygame.sprite.Sprite):
         changes the velocity of the character in the x and y based on joystick
         input
         """
+        # joystick controls for two seperate controllers
         if self.joystick_count == 2:
             # joystick control for player 1
             if self.playerNum == 1:
@@ -104,7 +105,7 @@ class Player(pygame.sprite.Sprite):
                 joystick = pygame.joystick.Joystick(1)
                 joystick.init()
 
-                # Different joystick settings for Xbox controllers
+                # different joystick settings for Xbox controllers
                 if joystick.get_name() == 'Xbox Wireless Controller' or 'Controller (Xbox One For Windows)':
                 # checks for axis movement and changes velX and velY
                     if round(joystick.get_axis(0)) != 0 or round(joystick.get_axis(1)) != 0:
@@ -131,6 +132,7 @@ class Player(pygame.sprite.Sprite):
                     if round(joystick.get_axis(1)) != 0 or round(joystick.get_axis(0)) != 0:
                         self.velX += joystick.get_axis(1) * player_speed
                         self.velY -= joystick.get_axis(0) * player_speed
+        # joystick controls for a single controller
         elif self.joystick_count == 1:
             # joystick control for player 1
             if self.playerNum == 1:
@@ -138,7 +140,7 @@ class Player(pygame.sprite.Sprite):
                 joystick = pygame.joystick.Joystick(0)
                 joystick.init()
 
-                # Different joystick settings for Xbox controllers
+                # different joystick settings for Xbox controllers
                 if joystick.get_name() == 'Xbox Wireless Controller' or 'Controller (Xbox One For Windows)':
                 # checks for axis movement and changes velX and velY
                     if round(joystick.get_axis(0)) != 0 or round(joystick.get_axis(1)) != 0:
@@ -155,7 +157,7 @@ class Player(pygame.sprite.Sprite):
                 joystick = pygame.joystick.Joystick(0)
                 joystick.init()
 
-                # Different joystick settings for Xbox controllers
+                # different joystick settings for Xbox controllers
                 if joystick.get_name() == 'Xbox Wireless Controller' or 'Controller (Xbox One For Windows)':
                 # checks for axis movement and changes velX and velY
                     if round(joystick.get_axis(4)) != 0 or round(joystick.get_axis(3)) != 0:
@@ -171,6 +173,7 @@ class Player(pygame.sprite.Sprite):
         rotates the player sprite based on the current direction and new
         direction
         """
+        # player 1 rotation
         if self.playerNum == 1:
             if self.velX > 100:
                 if self.velY < -100:
@@ -191,6 +194,7 @@ class Player(pygame.sprite.Sprite):
                     self.image = pygame.transform.rotate(self.game.player1_image, 90)
                 elif self.velY > 100:
                     self.image = pygame.transform.rotate(self.game.player1_image, -90)
+        # player 2 rotation
         else:
             if self.velX > 100:
                 if self.velY < -100:
@@ -241,6 +245,7 @@ class Player(pygame.sprite.Sprite):
         checks for player collision with the all wall sprites on the axis
         given and prevents player movement onto it
         """
+        # checks for player 1 collision to player 2
         if self.playerNum == 1:
             if axis == 'x':
                 if self.rect.colliderect(self.game.player2):
@@ -258,7 +263,7 @@ class Player(pygame.sprite.Sprite):
                         self.y = self.game.player2.rect.bottom
                     self.velY = 0
                     self.rect.y = self.y
-
+        # checks for player 2 collision to player 1
         else:
             if axis == 'x':
                 if self.rect.colliderect(self.game.player1):
