@@ -172,10 +172,6 @@ class Game:
         part of the game loop - draws the new sprite positions and text to the
         screen
         """
-        # updates window caption with current FPS
-        pygame.display.set_caption(
-            "{} | FPS: {:.0f}".format(title, self.fpsClock.get_fps()))
-
         # wipes both cameras and fills with light grey
         self.player1_cam.fill(lightgrey)
         self.player2_cam.fill(lightgrey)

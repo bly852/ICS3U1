@@ -309,24 +309,6 @@ class Player(pygame.sprite.Sprite):
         self.food_collision()
 
 
-class Student(pygame.sprite.Sprite):
-    """
-    class to contain all the data for student AI sprites
-    """
-    def __init__(self, game, x, y):
-        self.groups = game.all_sprites, game.students
-        pygame.sprite.Sprite.__init__(self, self.groups)
-        self.game = game
-
-        self.image = pygame.image.load(os.path.join(image_folder, (random.choice(student_images))))
-
-        self.rect = self.image.get_rect()
-        self.x = x
-        self.y = y
-        self.rect.x = x * tileSize
-        self.rect.y = y * tileSize
-
-
 class Wall(pygame.sprite.Sprite):
     """
     class to contain all the data for wall sprites
